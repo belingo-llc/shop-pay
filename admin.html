@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Главная</title>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    </head>
+    <body>
+        <div class="load_data_admin">
+            <h1 hidden>Сервис для оплаты заказов</h1>
+            ЗАГРУЗКА . . .<br>
+        </div>
+        <div class="header">
+            <div class="burger_menu">
+                <img src="/images/burger.png" alt="">
+            </div>
+            <div class="logo">Marusik.Shop</div>
+            <div class="basket_menu">
+                
+            </div>
+            <ul>
+                <a href="/shopping"><li>Каталог товаров</li></a>
+                <a href="/"><li>Оплата заказов</li></a>
+                <a href="/info"><li>Доставка и оплата</li></a>
+                <a href="/contacts"><li>Контакты</li></a>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="container">
+                <div class="add_products">
+                    <button class="button_blue" id="delete_products" style="margin-top: -50px; margin-bottom: 20px; width: 350px; background-color: rgb(223, 68, 68);border: 1px solid rgb(223, 68, 68);">Удалить товары</button>
+                    <button class="button_blue" id="upload_data_gh" style="margin-top: -50px; margin-bottom: 20px; width: 350px;">Загрузить товары из Google Sheets</button>
+                </div>
+                <table id="admin_table">
+                    <thead>
+                        <tr>
+                            <th>
+                                <select id="filterProvider">
+                                    <option value="none">Поставщик</option>
+                                </select>
+                            </th>
+                            <th>Название</th>
+                            <th>Общее Количество на складе</th>
+                            <th>Цена</th>
+                            <th>
+                                <select id="filterStatus">
+                                    <option value="none">Статус</option>
+                                </select>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="modal_block" id="delete_products_modal" style="display: none;">
+            <div class="modal_delete_prod">
+                <div class="close_modal_line">
+                    <div class="close_elips" id="close_delete_prod">×</div>
+                </div>
+                <div class="body_pr_info" style="flex-direction: column; align-items: center; padding-top: 15%; box-sizing: border-box;">
+                    <select id="deletedProvider"></select>
+                    <button class="button_blue" id="modalDelete" style="margin: 0px; margin-top: 20px; background-color: rgb(223, 68, 68);border: 1px solid rgb(223, 68, 68);">Удалить навсегда</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal_block" id="info_product_modal" style="display: none;">
+            <div class="modal_prod_info">
+                <div class="close_modal_line">
+                    <div class="close_elips" id="close_info_prod">×</div>
+                    <p hidden id="id_prod"></p>
+                </div>
+                <div class="body_pr_info">
+                    <div class="pr_info_left">
+                        <h3>Поставщик товара</h3>
+                        <input type="text" class="big_input" id="providerProduct" placeholder="Поставщик товара">
+                        <h3>Название товара</h3>
+                        <input type="text" class="big_input" id="nameProduct" placeholder="Название товара">
+                        <div class="pr_info_foto">
+
+                        </div>
+                        <div class="all_foto">
+                            <div class="all_item">
+                                <label for="upload_foto_node" class="modal_button" id="upload_foto">
+                                    <input type="file" id="upload_foto_node" id="file" name="file" accept="image/jpeg,image/png,image/gif">
+                                    +
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pr_info_right" style="margin-top: 0px;">
+                        <div class="info_price" style="margin-bottom:0px;">
+                            <h3>Артикул товара</h3>
+                            <input type="text" class="big_input" id="codeProduct" placeholder="Артикул товара">
+                            <h3>Цена товара</h3>
+                            <input type="text" class="big_input" id="priceProduct" placeholder="Цена товара">
+                        </div>
+                        <div class="info_size">
+                            <h3>Размеры и количество</h3>
+                            <div class="info_size_all" style="display: flex; flex-direction: column;">
+                            </div>
+                        </div>
+                        <div class="info_button">
+                            <button id="saveEdit">Сохранить данные</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page_menu_main" style="display: none;">
+            <div class="close_line" id="close_menu">×</div>
+            <div class="page_menu">
+                <ul>
+                    <a href="/shopping"><li>Каталог товаров</li></a>
+                    <a href="/"><li>Оплата заказов</li></a>
+                    <a href="/info"><li>Доставка и оплата</li></a>
+                    <a href="/contacts"><li>Контакты</li></a>
+                </ul>
+            </div>
+        </div>
+
+        <script src="/javascripts/jquery.min.js"></script>
+        <script src="/javascripts/script.js"></script>
+    </body>
+</html>

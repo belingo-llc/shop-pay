@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Информация о доставке</title>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <div class="burger_menu">
+                <img src="/images/burger.png" alt="">
+            </div>
+            <div class="logo">Marusik.Shop</div>
+            <div class="basket_menu">
+                
+            </div>
+            <ul>
+                <a href="/shopping"><li>Каталог товаров</li></a>
+                <a href="/"><li class="active_item">Оплата заказов</li></a>
+                <a href="/info"><li>Доставка и оплата</li></a>
+                <a href="/contacts"><li>Контакты</li></a>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="container">
+                <div class="row">
+                    <div class="main_block">
+                        <div class="block_left">
+                            <div class="title_block">Способ доставки</div>
+                            <div class="body_block_b">
+                                <input type="radio" name="x" class="radio_block" value="ПВЗ Боксберри" id="d_1"><label class="label_block" for="d_1" id="r_1">ПВЗ Боксберри</label>
+                                <!--<input type="radio" name="x" class="radio_block" value="Почта России" id="d_2"><label class="label_block" for="d_2" id="r_2">Почта России</label>-->
+                                <input type="radio" name="x" class="radio_block" value="Курьер-Москва" id="d_3"><label class="label_block" for="d_3" id="r_3">Курьер-Москва</label>
+                                <input type="radio" name="x" class="radio_block" value="Курьер-СПб" id="d_4"><label class="label_block" for="d_4" id="r_4">Курьер-СПб</label>
+                                <input type="radio" name="x" class="radio_block" value="Самовывоз" id="d_5"><label class="label_block" for="d_5" id="r_5" style="display:none;">Самовывоз</label>
+                            </div>
+                        </div>
+                        <div class="block_right">
+                            <div class="title_block">Заказ</div>
+                            <div class="body_block">
+                                <div class="left">
+                                    <h4>Стоимость товара</h4>
+                                    <br>
+                                    <h4>Стоимость доставки</h4>
+                                </div>
+                                <div class="right">
+                                    <h4>21500 руб.</h4>
+                                    <br>
+                                    <h4>0 руб.</h4>
+                                </div>
+                            </div>
+                            <div class="foot_block">
+                                <div class="left"><h3>Всего</h3></div>
+                                <br>
+                                <div class="right"><h3>21900 руб.</h3></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="block_middle">
+                        <div class="block">
+                            <div class="title_block">Информация для доставки</div>
+                            <div class="body_block_b">
+                                <div class="row_block" style="display:none">
+                                    <input type="text" id="insta" placeholder="* Ваш Ник инстаграмм">
+                                </div>
+                                <div class="row_block">
+                                    <input type="text" id="lname" placeholder="* Фамилия получателя посылки">
+                                    <input type="text" id="fname" placeholder="* Имя получателя посылки">
+                                </div>
+                                <div class="row_block">
+                                    <input type="text" id="mname" placeholder="* Отчество получателя посылки">
+                                </div>
+                                <div class="row_block">
+                                    <input type="tel" id="phone" maxlength="17" placeholder="* Номер мобильного телефона">
+                                </div>
+                                <div class="row_block"><label id="error_text" style="display: none;"></label></div>
+                                <div class="row_block">
+                                    <input type="number" id="index" placeholder="* Индекс" maxlength="6">
+                                    <input type="text" id="city" placeholder="* Город / Населенный пункт">
+                                </div>
+                                <div class="row_block"><label id="adress_text" style="display: none;">Адрес пункта выдачи Box Berry (нажмите для редактирования)</label></div>
+                                <div class="row_block">
+                                    <input type="text" id="adress"style="display: none; cursor: pointer;" placeholder="* Адрес пункта выдачи (определяется автоматически)" readonly>
+                                </div>
+                                <div class="row_block"><input type="text" id="street" placeholder="* Улица"></div>
+                                <div class="row_block">
+                                    <input type="text" id="home" placeholder="* Дом / Корпус">
+                                    <input type="text" id="room" placeholder="* Квартира">
+                                </div>
+                                <div class="row_block"><textarea id="comment" placeholder="Комментарий"></textarea></div>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <div class="body_block_b">
+                                <h3 style="color: brown; text-align: center;" class="display_none" id="error_input">* Необходимо заполнить все обязательные поля</h3>
+                            </div>
+                        </div>
+                        <div class="block">
+                            <div class="body_block_b">
+                                <p style="margin-bottom: 10px; font-family:Verdana, Geneva, Tahoma, sans-serif; text-align: center;">Нажимая на кнопку «Оформить заказ», вы принимаете<br> условия <a href="/about/oferta" target="_blank" style="color:royalblue;">Публичной оферты</a></p>
+                                <button type="button" class="button_payment" id="next">Оформить заказ</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row"><h5></h5></div>
+            </div>
+        </div>
+
+        <div class="modal_back" style="display: none;">
+            <div class="modal_window">
+                <div class="close_modal_line">
+                    <div class="show_form_city" style="display: none;">Показать форму ввода города</div>
+                    <div class="close_elips">×</div>
+                </div>
+                <div class="head_modal">
+                    <input type="text" id="modal_city" placeholder="Введите город доставки">
+                    <button class="modal_button" id="show_boxberry_map">Показать</button>
+                </div>
+                <div id="boxberry_map">
+
+                </div>
+            </div>
+        </div>
+        <div class="page_menu_main" style="display: none;">
+            <div class="close_line" id="close_menu">×</div>
+            <div class="page_menu">
+                <ul>
+                    <a href="/shopping"><li>Каталог товаров</li></a>
+                    <a href="/"><li>Оплата заказов</li></a>
+                    <a href="/info"><li>Доставка и оплата</li></a>
+                    <a href="/contacts"><li>Контакты</li></a>
+                </ul>
+            </div>
+        </div>
+
+    </body>
+    <script src="/javascripts/jquery.min.js"></script>
+    <script src="/javascripts/jquery.inputmask.bundle.js"></script>
+    <script src="/javascripts/script.js"></script>
+    <script type="text/javascript"src="http://points.boxberry.ru/js/boxberry.js"></script>
+</html>
+
+<script>
+    window.onload = function(e){
+
+        var block_left = document.getElementsByClassName('left')[0];
+        var block_right = document.getElementsByClassName('right')[0];
+        var h_three = document.getElementsByTagName('h3')[1];
+
+        var product = document.getElementsByClassName('right')[0].getElementsByTagName('h4')[0];
+        product.textContent = sessionStorage.getItem("SUMMA") + " руб.";
+
+        h_three.textContent = Number(sessionStorage.getItem("SUMMA")) + " руб.";
+
+    }
+
+
+</script>
+
+

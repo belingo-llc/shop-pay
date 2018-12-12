@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Главная</title>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    </head>
+    <body>
+        <div class="load_data">
+            <h1 hidden>Сервис для оплаты заказов</h1>
+            ЗАГРУЗКА<br>
+            <h3>Не работает сайт? Попробуйте открыть в Google Chrome</h3>
+        </div>
+        <div id="placeholder" style="display: none;">
+            <ul>
+                <li>Введите ник, чтобы узнать информацию о покупках</li>
+            </ul>
+        </div>
+        <div class="header">
+            <div class="burger_menu">
+                <img src="/images/burger.png" alt="">
+            </div>
+            <div class="logo">Marusik.Shop</div>
+            <div class="basket_menu">
+                
+            </div>
+            <ul>
+                <a href="/shopping"><li>Каталог товаров</li></a>
+                <a href="/"><li class="active_item">Оплата заказов</li></a>
+                <a href="/info"><li>Доставка и оплата</li></a>
+                <a href="/contacts"><li>Контакты</li></a>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="container">
+                <div class="row">
+                    <div class="main_column_nickname">
+                        <input class="input_payment" type="text" id="nick_name" placeholder="Введите ваш Ник Инстаграмм">
+                        <button type="submit" id="search">Найти</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="main_column" id="sheet_name" style="display: none; margin-bottom: 25px;">
+                        <h3>НАЗВАНИЕ ЗАКУПОК: </h3>
+                        <p>Просим прощения! Одновременно вы можете оплатить только одну закупку.</p>
+                        <ul>
+                            <li>Кросовки</li>
+                            <li>Духи</li>
+                            <li>Что то еще</li>
+                        </ul>
+                        <h1 style="display: none;">Ничего не найдено! <br>Все заказы оплачены или ник введен ошибочно!</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="main_column">
+                        <div class="text" style="display: none"><img src="/images/loading.gif"></div>
+                        <table class="table_payment" style="display: none;">
+                            <thead>
+                                <th>Название</th>
+                                <th>Ар-л</th>
+                                <th>Кол-во</th>
+                                <th>Руб</th>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Кросовки Nike</td>
+                                    <td>211_71</td>
+                                    <td>1</td>
+                                    <td>3500 руб.</td>
+                                </tr>
+                                <tr>
+                                    <td>Толствока Adidas</td>
+                                    <td>2222_388</td>
+                                    <td>1</td>
+                                    <td>2300 руб.</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colspan="3">ИТОГО:</td>
+                                    <td>5800 руб.</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+                <div class="row">
+                    <br>
+                    <button type="button" id="to_delivery" style="display:none;">Перейти к оплате</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="page_menu_main" style="display: none;">
+            <div class="close_line" id="close_menu">×</div>
+            <div class="page_menu">
+                <ul>
+                    <a href="/shopping"><li>Каталог товаров</li></a>
+                    <a href="/"><li>Оплата заказов</li></a>
+                    <a href="/info"><li>Доставка и оплата</li></a>
+                    <a href="/contacts"><li>Контакты</li></a>
+                </ul>
+            </div>
+        </div>
+
+
+        <script src="/javascripts/jquery.min.js"></script>
+        <script src="/javascripts/script.js"></script>
+    </body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Главная</title>
+        <link rel="stylesheet" href="/stylesheets/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+    </head>
+    <body>
+        <div class="header">
+            <div class="burger_menu">
+                <img src="/images/burger.png" alt="">
+            </div>
+            <div class="logo">Marusik.Shop</div>
+            <div class="basket_menu">
+                <div class="basket_button">
+                    <img src="/images/basket.png" alt="">
+                </div>
+            </div>
+            <ul>
+                <li class="active_item">Каталог товаров</li>
+                <a href="/"><li>Оплата заказов</li></a>
+                <a href="/info"><li>Доставка и оплата</li></a>
+                <a href="/contacts"><li>Контакты</li></a>
+            </ul>
+        </div>
+        <div class="main">
+            <div class="container">
+                
+            </div>
+        </div>
+
+        <div class="basket_button">
+            <img src="/images/basket.png" alt="" width="40px" height="40px">
+        </div>
+        <div id="count_product" style="display:none;">
+            0
+        </div>
+
+        <div class="page_basket" style="display:none;">
+            <div class="close_line" id="close_basket">×</div>
+            <div class="page">
+                <div class="page_title">
+                    Выбранные товары
+                </div>
+                <div class="page_splin"> </div>
+                <div class="page_splin">
+                    
+                </div>
+                <div class="page_summa">ИТОГО: <span>0 ₽</span></div>
+                <div class="button_forward">
+                    <div class="info_button">
+                        <button id="continue_shop">Вернутся к покупкам</button>
+                        <button id="pay_products">Оформить заказ</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal_block" style="display: none;">
+            <div class="modal_prod_info">
+                <div class="close_modal_line">
+                    <div class="close_elips" id="close_info_prod">×</div>
+                    <p hidden id="product_id_b"></p>
+                </div>
+                <div class="body_pr_info">
+                    <div class="pr_info_left">
+                        <p class="name_pr_inf">Название товара</p>
+                        <p>Артикул: <span>612748</span></p>
+                        <div class="info_price">
+                            <div class="info_price_title">Цена закупки:</div>
+                            <h1>5000 руб.</h1>
+                        </div>
+                        <div class="pr_info_foto">
+                            <img src="/images/ecco1.jpg" alt="">
+                        </div>
+                        <div class="all_foto">
+                        </div>
+                        <div class="pr_info_info">
+                            <div class="info_title">
+                                <div class="title_item" id="title_item_active">Описание</div>
+                                <div class="title_item">Доставка и оплата</div>
+                            </div>
+                            <div class="info_info_body">
+                                <p><span>Бренд: </span> ECCO</p>
+                                <p><span>Сезонность: </span> Лето</p>
+                                <p><span>Состав: </span> Замша, кожа слона, зубы змеи и крысиный хвост</p>
+                            </div>
+                            <div class="info_info_body" style="display: none;">
+                                <p><span style="margin:0px;">Доставка: </span> Сроки доставки для каждого покупателя индивидуальны, но не менее 7 дней.</p>
+                                <p><span style="margin:0px;">Оплата: </span> банковской картой при оформлении заказа.</p>
+                                <p>Подробнее о способах доставки и оплате товара вы можете узнать <a href="/info" style="color:rgb(22, 90, 214); font-weight: 700;">здесь</a></p>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="pr_info_right">
+                        <div class="info_price">
+                            <div class="info_price_title">Цена закупки (орг % вкл):</div>
+                            <h1>5000 руб.</h1>
+                        </div>
+                        <div class="info_size">
+                            <div class="info_size_title">Выберите размер</div>
+                            <div class="info_size_all">
+                                <div class="size_all_item">41</div>
+                                <div class="size_all_item">42</div>
+                                <div class="size_all_item">43</div>
+                                <div class="size_all_item">41</div>
+                                <div class="size_all_item">42</div>
+                                <div class="size_all_item">43</div>
+                            </div>
+                        </div>
+                        <div class="info_button">
+                            <button id="back_page">Вернутся назад</button>
+                            <button id="in_basket_to">В корзину</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="page_menu_main" style="display: none;">
+            <div class="close_line" id="close_menu">×</div>
+            <div class="page_menu">
+                <ul>
+                    <a href=""><li>Каталог товаров</li></a>
+                    <a href="/"><li>Оплата заказов</li></a>
+                    <a href="/info"><li>Доставка и оплата</li></a>
+                    <a href="/contacts"><li>Контакты</li></a>
+                </ul>
+            </div>
+        </div>
+
+        <script src="/javascripts/jquery.min.js"></script>
+        <script src="/javascripts/script.js"></script>
+    </body>
+</html>
