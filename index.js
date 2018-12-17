@@ -469,6 +469,29 @@ app.post('/saveproductsandsberpay', async (req, res) => {
   });
 
 });
+app.post('/findproductfromprovider', (req, res) => {
+  var provider = req.body.provider;
+
+  if (provider != "Все поставщики"){
+    var search = {
+      status: "Активно", 
+      provider: provider
+    }
+  } else {
+    var search = {
+      status: "Активно"
+    }
+  }
+
+  models.Products.find(search)
+  .then(pr => {
+    res.json({ok: true, pr});
+  })
+  .catch(err => {
+    res.json({ok: false, text: 'Сервер временно недоступен!'});
+  })
+
+})
 
 const rs = () =>
   Math.random()
@@ -730,7 +753,8 @@ var sucPayment = async () => {
 
 }
 
-new CronJob('*/1 * * * *', () => {
+/*
+new CronJob('/1 * * * *', () => {
   var now = new Date();
   if (now.getMinutes() % 2 == 0){
     // If modifying these scopes, delete token.json.
@@ -1025,6 +1049,7 @@ new CronJob('*/1 * * * *', () => {
   }
 }, null, true);
 
+*/
 app.get('*', function(req, res){
   res.redirect('/');
 });

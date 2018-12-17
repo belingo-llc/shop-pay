@@ -271,11 +271,15 @@ a{
 }
 
 
-@media (min-width: 1200px) {
+
+@media (min-width: 1250px) {
     .container {
-      width: 1190px; } }
+        width: 80%;
+        margin: 0px auto;
+    } 
+}
   /* Portrait tablets and small desktops */
-@media (min-width: 781px) and (max-width: 1199px) {
+@media (min-width: 781px) and (max-width: 1249px) {
     .container {
       width: 100%; } }
   /* Landscape phones and portrait tablets */
@@ -727,7 +731,7 @@ input:not(.input_payment){
 }
 .product:hover{
     transition: 0.3s;
-    box-shadow: 0px 0px 10px lightgray;
+    /*box-shadow: 0px 0px 10px lightgray;*/
 }
 .product:hover .in_basket{
     transition: 0.3s;
@@ -745,7 +749,7 @@ input:not(.input_payment){
     align-items: center;
 }
 .block_foto img{
-    width: 200px;
+    width: 150px;
     height: auto;
 }
 .info_a{
@@ -812,13 +816,13 @@ input:not(.input_payment){
     width: 100vw;
     height: 100%;
     position: absolute;
-    top: 0px;
     left: 0px;
     background-color: rgba(0, 0, 0, .8);
     display: flex;
     flex-direction: column;
     opacity: 0;
     z-index: 10000;
+    overflow-y: auto;
 }
 .close_line{
     position: fixed;
@@ -1209,7 +1213,7 @@ input:not(.input_payment){
     font-size: 50px;
 }
 .all_item img{
-    width: 70px;
+    width: 60px;
     height: auto;
 }
 
@@ -1351,8 +1355,8 @@ input[type='file']{
 .page_menu{
     width: 100%;
     height: 100%;
-    padding-left: 70px;
-    padding-top: 100px;
+    padding-left: 50px;
+    padding-top: 70px;
     box-sizing: border-box;
 }
 .page_menu ul{
@@ -1360,10 +1364,53 @@ input[type='file']{
 }
 .page_menu ul li{
     font-size: 20px;
-    padding: 15px;
+    padding: 10px;
+    color: white;
+}
+.page_menu ul li ul{
+    margin-left: 10px;
+    border-left: 1px dashed lightgray;
+}
+.page_menu ul li ul li{
+    font-size: 20px;
+    padding: 8px 15px;
+    color: white;
 }
 .pr_info_left .info_price{
     display: none;
+}
+
+.filter_block{
+    width: 100%;
+    max-width: 200px;
+    position: relative;
+    margin-right: 30px;
+    text-align: left;
+}
+.filter_block ul{
+    list-style: none;
+}
+.filter_block ul li{
+    width: 100%;
+    height: 40px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+.filter_block ul li:hover{
+    background-color: #1a86df;
+    color: white;
+}
+#active_provider{
+    background-color: #1a86df;
+    color: white;
+}
+.products_block{
+    width: 100%;
 }
 
   /* Landscape phones and portrait tablets */
@@ -1665,6 +1712,7 @@ input[type='file']{
         margin: 0px;
     }
     .modal_block{
+        height: a;
         overflow-y: auto;
     }
     .pr_info_foto{
@@ -1676,8 +1724,8 @@ input[type='file']{
         height: auto;
     }
     .all_item{
-        width: 100%;
-        height: auto;
+        width: 50px;
+        height: 50px;
         margin-right: 10px;
     }
     .all_item img{
@@ -1698,17 +1746,18 @@ input[type='file']{
         margin-right: 20px;
     }
     .modal_prod_info{
-        height: auto;
+        height: 1000px;
     }
-
-}
-@media (max-width: 380px) {
+    .filter_block{
+        display: none;
+    }
     .close_modal_line{
         padding: 0px;
         margin-bottom: 10px;
-        height: 30px;
+        height: 80px;
         padding-top: 10px;
         padding-right: 10px;
+        justify-content: center;
         align-items: center;
         margin-bottom: 10px;
     }
@@ -1716,6 +1765,27 @@ input[type='file']{
         width: 20px;
         height: 20px;
         font-size: 20px;
+    }
+
+}
+@media (max-width: 380px) {
+    .close_modal_line{
+        padding: 0px;
+        margin-bottom: 10px;
+        height: 80px;
+        padding-top: 10px;
+        padding-right: 10px;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    .close_elips{
+        width: 20px;
+        height: 20px;
+        font-size: 20px;
+    }
+    .page_menu ul li ul li{
+        padding: 5px;
     }
 }
 
@@ -1779,3 +1849,4 @@ th select{
     padding: 10px;
     font-size: 17px;
 }
+

@@ -188,114 +188,79 @@ $(document).ready(() => {
             url: '/allproducts'
         }).done(function(data){
             if (data.ok){
+
                 var pr = data.pr;
-                $('.container').html('');
-                if (pr.length > 0){
-                    var index = 0;
-                    var len = pr.length;
 
-                    for (i=0; i < pr.length; i+=4){
-                        var row = "";
-                        var col = `<div class="column_a">`;
-                        var col2 = `<div class="column_a">`;
-                        var product = "";
-                        var product2 = "";
-                        for (x=0; x < 4; x++){
-                            if (index < len){
-                                var prodarr = pr[i+x].number;
-                                var lenProd = 0;
-                                for (var zx=0; zx < prodarr.length; zx++){
-                                    if (Number(prodarr[zx]) > 0){
-                                        lenProd = Number(prodarr[zx]);
-                                        break;
-                                    }
-                                }
-                                if (lenProd > 0){
-                                    if (x < 2){
-                                        product += `<div class="product"> 
-                                        <div class="block_foto"> 
-                                        <img src="${pr[i+x].photo[0]}" alt=""> 
-                                        </div> 
-                                        <span class="brend">${pr[i+x].provider}</span> 
-                                        <p>${pr[i+x].name}</p> 
-                                        <span class="price">${pr[x].price} ₽</span> 
-                                        <button class="in_basket" id="${pr[i+x].id}">Подробнее</button> 
-                                        </div> `
-                                    } else{
-                                        product2 += `<div class="product"> 
-                                        <div class="block_foto"> 
-                                        <img src="${pr[i+x].photo[0]}" alt=""> 
-                                        </div> 
-                                        <span class="brend">${pr[i+x].provider}</span> 
-                                        <p>${pr[i+x].name}</p> 
-                                        <span class="price">${pr[i+x].price} ₽</span> 
-                                        <button class="in_basket" id="${pr[i+x].id}">Подробнее</button> 
-                                        </div> `
-                                    }
-                                }
-                            } else {
-                                break;
-                            }
-                            index ++;
+                var provider = {};
+
+                for(var r=0; r < data.pr.length; r+=4){
+                    var row = `<div class="row_a">`;
+                    var column = `<div class="column_a">`;
+                    var product = '';
+                    for (var c=r;c < r+2; c++) {
+                        if (c < data.pr.length) {
+                            provider[pr[c].provider] = true;
+                            product += `
+                            <div class="product"> 
+                                <div class="block_foto"> 
+                                    <img src="${pr[c].photo[0]}" alt=""> 
+                                </div> 
+                                <span class="brend">${pr[c].provider}</span> 
+                                <p>${pr[c].name}</p> 
+                                <span class="price">${pr[c].price} ₽</span> 
+                                <button class="in_basket" id="${pr[c].id}">Подробнее</button> 
+                            </div> 
+                            `
+                        } else {
+                            break;
                         }
-                        col += `${product}</div>`;
-                        col2 += `${product2}</div>`;
-                        row  = `<div class="row_a">${col}${col2}</div>`
-                        $('.container').append(row)
+                    }
+                    column += product + '</div>'
+                    row += column;
+
+                    column = `<div class="column_a">`;
+                    product = '';
+
+                    for (var c=r+2; c < r+4; c++){
+                        if (c < data.pr.length) {
+                            provider[pr[c].provider] = true;
+                            product += `
+                            <div class="product"> 
+                                <div class="block_foto"> 
+                                    <img src="${pr[c].photo[0]}" alt=""> 
+                                </div> 
+                                <span class="brend">${pr[c].provider}</span> 
+                                <p>${pr[c].name}</p> 
+                                <span class="price">${pr[c].price} ₽</span> 
+                                <button class="in_basket" id="${pr[c].id}">Подробнее</button> 
+                            </div> 
+                            `
+                        } else {
+                            break;
+                        }
                     }
 
-                    len = $('.product').length%2;
-                    if (len > 0){
-                        $('.row_a:last-child .column_a:last-child').append(`<div class="product" style="opacity:0;"></div>`);
-                    }
-                    if ($('.row_a:last-child .column_a:first-child .product').length == 1){
-                        $('.row_a:last-child .column_a:first-child').append(`<div class="product" style="opacity:0;"></div>`);
-                    }
+                    column += product + '</div>'
+                    row += column;
 
-                    var basket = JSON.parse(sessionStorage.getItem('SHOPPING'));
-                    if (!basket){
-                        basket = {};
-                    }
-                    var keys = Object.keys(basket);
-                    if (keys.length > 0){
-                        $('#count_product').text(keys.length);
-                        $('#count_product').show();
-                    }
+                    $('.products_block').append(row);
 
-                    $('.page_splin:eq(1)').text();
-                    var keys = Object.keys(basket);
-                    var summ = 0;
-                    keys.map(id_pr => {
-                        $('.page_splin:eq(1)').append(
-                            `<div class="page_product" id="${id_pr}">
-                                <div class="page_p_photo"><img src="${basket[id_pr].photo}" alt=""></div>
-                                <div class="page_p_name">
-                                    <div class="page_p_n_text">${basket[id_pr].name}</div>
-                                    <div class="page_p_n_price">${basket[id_pr].price} ₽</div>
-                                    <div class="page_p_n_col">
-                                        <div class="col_status col_minus">–</div>
-                                        <div class="col_col">${basket[id_pr].col}</div>
-                                        <div class="col_status col_plus">+</div>
-                                    </div>
-                                </div>
-                                <div class="page_p_remove">
-                                    <div class="col_status">×</div>
-                                </div>
-                            </div>`
-                        );
-                        summ += Number(basket[id_pr].price)*basket[id_pr].col;
-                    });
-
-                    $('.page_summa span').html(`${summ} ₽`);
-
-                } else {
-                    $('.container').append('<h2>Товаров пока нет, зайдите позже . . .</h2>');
                 }
+                $('.filter_block ul').append(`<li id="active_provider">Все поставщики</li>`)
+                $('#provider_li ul').append(`<li id="active_provider" class="prov_item_li">Все поставщики</li>`)
+                Object.keys(provider).map(prov => {
+                    $('.filter_block ul').append(`<li>${prov}</li>`);
+                    $('#provider_li ul').append(`<li class="prov_item_li">${prov}</li>`)
+                });
+
             } else {
                 console.log(data);
             }
         });
+        
     }
+
+
 
     var preload = () => {
 
@@ -1552,6 +1517,10 @@ $(document).ready(() => {
         }
 
         var info_size = $('.info_size').attr('style');
+        $('.page_basket').css({
+            'top': $(window).scrollTop(),
+            'overflow': 'auto'
+        });
 
         if (info_size != "display: none;"){
             if (size){
@@ -1711,7 +1680,6 @@ $(document).ready(() => {
         $('.page_menu_main').show(100);
         $('body, html').css('overflow-y', 'hidden');
     })
-
 
     $('#saveEdit').on('click', (e) => {
 
@@ -1888,6 +1856,178 @@ $(document).ready(() => {
                 location.reload();
             }
         });
+
+    });
+
+    $(document).delegate( ".filter_block ul li", "click", (e) => {
+        $('.filter_block ul li').removeAttr('id');
+        $(e.target).attr('id', 'active_provider');
+
+        var provider = $(e.target).text();
+
+        var data = {
+            provider
+        }
+
+        $('.products_block').text('');
+        
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            url: '/findproductfromprovider'
+        }).done(function(data){
+            if (data.ok){
+
+                var pr = data.pr;
+                for(var r=0; r < data.pr.length; r+=4){
+                    var row = `<div class="row_a">`;
+                    var column = `<div class="column_a">`;
+                    var product = '';
+                    for (var c=r;c < r+2; c++) {
+                        if (c < data.pr.length) {
+                            product += `
+                            <div class="product"> 
+                                <div class="block_foto"> 
+                                    <img src="${pr[c].photo[0]}" alt=""> 
+                                </div> 
+                                <span class="brend">${pr[c].provider}</span> 
+                                <p>${pr[c].name}</p> 
+                                <span class="price">${pr[c].price} ₽</span> 
+                                <button class="in_basket" id="${pr[c].id}">Подробнее</button> 
+                            </div> 
+                            `
+                        } else {
+                            break;
+                        }
+                    }
+                    column += product + '</div>'
+                    row += column;
+
+                    column = `<div class="column_a">`;
+                    product = '';
+
+                    for (var c=r+2; c < r+4; c++){
+                        if (c < data.pr.length) {
+                            product += `
+                            <div class="product"> 
+                                <div class="block_foto"> 
+                                    <img src="${pr[c].photo[0]}" alt=""> 
+                                </div> 
+                                <span class="brend">${pr[c].provider}</span> 
+                                <p>${pr[c].name}</p> 
+                                <span class="price">${pr[c].price} ₽</span> 
+                                <button class="in_basket" id="${pr[c].id}">Подробнее</button> 
+                            </div> 
+                            `
+                        } else {
+                            break;
+                        }
+                    }
+
+                    column += product + '</div>'
+                    row += column;
+
+                    $('.products_block').append(row);
+
+                }
+
+            } else {
+                console.log(data);
+            }
+        });
+        
+    })
+
+    $('#provider_li').on('click', (e) => {
+        if (e.target.className != 'prov_item_li') {
+            if ($('#provider_li span').text() == '+') {
+                $('#provider_li span').text('-');
+                $('#provider_li ul').show(100);
+            } else {
+                $('#provider_li span').text('+');
+                $('#provider_li ul').hide(100);
+            }
+        } else {
+            $('.page_menu_main').hide();
+            $('body, html').css('overflow', 'auto');
+
+            var provider = $(e.target).text();
+
+            var data = {
+                provider
+            }
+
+            $('.products_block').text('');
+            $('#provider_li ul li').removeAttr('id');
+            $(e.target).attr('id', 'active_provider');
+            
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: '/findproductfromprovider'
+            }).done(function(data){
+                if (data.ok){
+
+                    var pr = data.pr;
+                    for(var r=0; r < data.pr.length; r+=4){
+                        var row = `<div class="row_a">`;
+                        var column = `<div class="column_a">`;
+                        var product = '';
+                        for (var c=r;c < r+2; c++) {
+                            if (c < data.pr.length) {
+                                product += `
+                                <div class="product"> 
+                                    <div class="block_foto"> 
+                                        <img src="${pr[c].photo[0]}" alt=""> 
+                                    </div> 
+                                    <span class="brend">${pr[c].provider}</span> 
+                                    <p>${pr[c].name}</p> 
+                                    <span class="price">${pr[c].price} ₽</span> 
+                                    <button class="in_basket" id="${pr[c].id}">Подробнее</button> 
+                                </div> 
+                                `
+                            } else {
+                                break;
+                            }
+                        }
+                        column += product + '</div>'
+                        row += column;
+
+                        column = `<div class="column_a">`;
+                        product = '';
+
+                        for (var c=r+2; c < r+4; c++){
+                            if (c < data.pr.length) {
+                                product += `
+                                <div class="product"> 
+                                    <div class="block_foto"> 
+                                        <img src="${pr[c].photo[0]}" alt=""> 
+                                    </div> 
+                                    <span class="brend">${pr[c].provider}</span> 
+                                    <p>${pr[c].name}</p> 
+                                    <span class="price">${pr[c].price} ₽</span> 
+                                    <button class="in_basket" id="${pr[c].id}">Подробнее</button> 
+                                </div> 
+                                `
+                            } else {
+                                break;
+                            }
+                        }
+
+                        column += product + '</div>'
+                        row += column;
+
+                        $('.products_block').append(row);
+
+                    }
+
+                } else {
+                    console.log(data);
+                }
+            });
+        }
 
     });
     
