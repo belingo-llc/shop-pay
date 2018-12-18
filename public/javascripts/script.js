@@ -1074,6 +1074,9 @@ $(document).ready(() => {
             url: '/productinfo'
         }).done(function(data){
             if (data.ok){
+
+                console.log(data);
+
                 var pr = data.pr;
                 $('.pr_info_left .name_pr_inf').text(pr.name);
                 $('.pr_info_left p:eq(1)').html(`Артикул: <span>${pr.code}</span>`);
@@ -1097,7 +1100,16 @@ $(document).ready(() => {
                 $('.info_price h1').html(`${pr.price} руб.`);
 
                 $('.info_size_all').text('');
-                if (pr.size.length > 1){
+
+                for (var i = 0; i < pr.size.length; i++){
+                    if (Number(pr.number[i]) > 0 && pr.size[i]) {
+                        $('.info_size_all').append(`<div class="size_all_item">${pr.size[i]}</div>`);
+                    } else {
+                        $('.info_size').hide();
+                    }
+                }
+
+                /*if (pr.size.length >= 1){
                     for (var i = 0; i < pr.size.length; i++){
                         if (pr.number[i] > 0 && pr.size[i]) {
                             $('.info_size_all').append(`<div class="size_all_item">${pr.size[i]}</div>`);
@@ -1109,7 +1121,7 @@ $(document).ready(() => {
                     } else {
                         $('.info_size').hide();
                     }
-                }
+                }*/
 
                 $('html, body').css('overflow-y', 'hidden');
                 $('.modal_block').css('top', $(window).scrollTop());
@@ -1228,28 +1240,7 @@ $(document).ready(() => {
         } else {
             alert('Корзина пуста!');
         }
-    })
-    // ВИДЖЕТ БОКСБЕРРИ
-    /*$('#show_boxberry_map').on('click', (e) => {
-        $('.show_form_city').show();
-        var sity = '';
-        if (sity){
-            var api_token = 'T6KqdLlDga5Y6k5thMb7aA==';
-            var custom_city = sity;
-            var target_start = '';
-            var ordersum = '';
-            var weight = '';
-            var paysum = '';
-            var height = '';
-            var width = '';
-            var depth = '';
-
-            $('#boxberry_map').text('');
-
-            boxberry.openOnPage('boxberry_map'); 
-            boxberry.open(boxberry_function, api_token, custom_city, target_start, ordersum, weight, paysum, height, width, depth);
-        }
-    });*/
+    });
     var boxberry_function = (result) => {
         $('#adress').show(200);
         $('#adress_text').show();
