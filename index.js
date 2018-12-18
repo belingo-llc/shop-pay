@@ -753,8 +753,7 @@ var sucPayment = async () => {
 
 }
 
-/*
-new CronJob('/1 * * * *', () => {
+new CronJob('*/1 * * * *', () => {
   var now = new Date();
   if (now.getMinutes() % 2 == 0){
     // If modifying these scopes, delete token.json.
@@ -1049,7 +1048,6 @@ new CronJob('/1 * * * *', () => {
   }
 }, null, true);
 
-*/
 app.get('*', function(req, res){
   res.redirect('/');
 });
