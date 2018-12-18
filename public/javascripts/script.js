@@ -260,8 +260,6 @@ $(document).ready(() => {
         
     }
 
-
-
     var preload = () => {
 
         $.ajax({
@@ -548,6 +546,23 @@ $(document).ready(() => {
             $('#home').hide(200);
             $('#room').hide(200);
             $('#adress_text').hide();
+
+            $('.show_form_city').show();
+            var sity = '';
+            var api_token = 'T6KqdLlDga5Y6k5thMb7aA==';
+            var custom_city = sity;
+            var target_start = '';
+            var ordersum = '';
+            var weight = '';
+            var paysum = '';
+            var height = '';
+            var width = '';
+            var depth = '';
+
+            $('#boxberry_map').text('');
+
+            boxberry.openOnPage('boxberry_map'); 
+            boxberry.open(boxberry_function, api_token, custom_city, target_start, ordersum, weight, paysum, height, width, depth);
 
             sessionStorage.setItem('DELIRVERY', "ПВЗ Боксберри");
 
@@ -1215,10 +1230,9 @@ $(document).ready(() => {
         }
     })
     // ВИДЖЕТ БОКСБЕРРИ
-    $('#show_boxberry_map').on('click', (e) => {
-        $('.head_modal').hide(100);
+    /*$('#show_boxberry_map').on('click', (e) => {
         $('.show_form_city').show();
-        var sity = $('#modal_city').val();
+        var sity = '';
         if (sity){
             var api_token = 'T6KqdLlDga5Y6k5thMb7aA==';
             var custom_city = sity;
@@ -1235,7 +1249,7 @@ $(document).ready(() => {
             boxberry.openOnPage('boxberry_map'); 
             boxberry.open(boxberry_function, api_token, custom_city, target_start, ordersum, weight, paysum, height, width, depth);
         }
-    });
+    });*/
     var boxberry_function = (result) => {
         $('#adress').show(200);
         $('#adress_text').show();
@@ -1263,10 +1277,6 @@ $(document).ready(() => {
         $('html, body').css('overflow-y', 'hidden');
         $('.modal_back').show();
     });
-    $('.show_form_city').on('click', () => {
-        $('.head_modal').show(100);
-        $('#boxberry_map').text('');
-    })
     $(document).delegate( ".size_all_item", "click", (e) => {
         $('.size_all_item').removeAttr('id');
         e.target.id = 'size_all_active';
@@ -1517,10 +1527,7 @@ $(document).ready(() => {
         }
 
         var info_size = $('.info_size').attr('style');
-        $('.page_basket').css({
-            'top': $(window).scrollTop(),
-            'overflow': 'auto'
-        });
+        $('.page_basket').css('top', $(window).scrollTop());
 
         if (info_size != "display: none;"){
             if (size){
