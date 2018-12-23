@@ -108,6 +108,21 @@ var insertProduct = () => {
       });
     }
     async function listMajors(auth) {
+
+      try{
+        var datadb = await models.Products.find();
+      } catch(e) {
+        var datadb = [];
+      }
+
+      var arrDBName = [];
+      var arrDBId = [];
+
+      for (var i=0; i < datadb.length; i++){
+        arrDBName.push(datadb[i].name);
+        arrDBId.push(datadb[i]._id);
+      }
+
       const sheets = google.sheets({version: 'v4', auth});
       var param = {
         spreadsheetId: '1Wx9YsMXflihNX-E_BeoCV0QOQtSo1qz7pM_LqtAoSYY',
@@ -130,26 +145,36 @@ var insertProduct = () => {
         } catch(e){
           var sizeArr = [];
         }
-
-        arrData.push({
-          name: prod[i][0],
-          price: prod[i][1],
-          provider: prod[i][2],
-          number: numberArr,
-          size: sizeArr,
-          composition: prod[i][5],
-          code: prod[i][6],
-          season: prod[i][7] || "",
-          comment: prod[i][8],
-          photo: [],
-          status: "Нет фото"
-        });
+        
+        if (arrDBName.indexOf(prod[i][0]) == -1) {
+          arrData.push({
+            name: prod[i][0],
+            price: prod[i][1],
+            provider: prod[i][2],
+            number: numberArr,
+            size: sizeArr,
+            composition: prod[i][5],
+            code: prod[i][6],
+            season: prod[i][7] || "",
+            comment: prod[i][8],
+            photo: [],
+            status: "Нет фото"
+          });
+        } else {
+          try {
+            await models.Products.findByIdAndUpdate(arrDBId[arrDBName.indexOf(prod[i][0])], {
+            price: prod[i][1],
+            provider: prod[i][2],
+            composition: prod[i][5],
+            code: prod[i][6],
+            season: prod[i][7] || "",
+            comment: prod[i][8],
+            });
+          } catch(e) {
+            console.log('Error');
+          }
+        }
       }
-
-      models.Products.remove()
-      .catch(err => {
-        console.log('Продукты - ОШИБКА УДАЛЕНИЯ!');
-      })
 
       models.Products.insertMany(arrData)
       .then(pr => {
@@ -1048,7 +1073,6 @@ new CronJob('*/1 * * * *', () => {
     }
   }
 }, null, true);
-
 app.get('*', function(req, res){
   res.redirect('/');
 });

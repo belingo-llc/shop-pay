@@ -1775,9 +1775,9 @@ $(document).ready(() => {
 
     $('#upload_data_gh').on('click', (e) => {
 
-        alert("В разработке... Уже готово! Для безопасности отключено!");
+        //alert("В разработке... Уже готово! Для безопасности отключено!");
 
-        /*$('.load_data_admin').show();
+        $('.load_data_admin').show();
 
         $.ajax({
             type: 'POST',
@@ -1787,9 +1787,9 @@ $(document).ready(() => {
                 $('.load_data_admin').hide();
                 alert('Не удалось загрузить товары. Попробуйте позже...');
             } else {
-                location.reload();
+                setTimeout(() => {location.reload();}, 2000);
             }
-        });*/
+        });
     })
     $('#delete_products').on('click', (e) => {
         $('#delete_products_modal').show();
