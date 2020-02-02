@@ -1049,6 +1049,41 @@ new CronJob('*/1 * * * *', () => {
         .then(qw => {
           for (var x = 0; x < ids.length; x++){
             console.log('Ид - ' + ids[x]);
+
+            // create order in moysklad
+            var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
+            var data = {
+              "name": values[x].numOrder,
+              "organization": {
+                "meta": {
+                  "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
+                  "type": "organization",
+                  "mediaType": "application/json"
+                }
+              },
+              "agent": {
+                "meta": {
+                  "href": "https://online.moysklad.ru/api/remap/1.1/entity/counterparty/20978216-9f37-11e9-912f-f3d400151326",
+                  "type": "counterparty",
+                  "mediaType": "application/json"
+                }
+              },
+              "state": {
+                "meta": {
+                  "href": "https://online.moysklad.ru/api/remap/1.1/entity/customerorder/metadata/states/8d24e1fc-3916-11e9-912f-f3d400263b88",
+                  "type": "state",
+                  "mediaType": "application/json"
+                }
+              }
+            }
+            const headers = {
+              'Content-Type': 'application/json',
+              'Authorization': 'Admin@9645054848:marmar3587133mar'
+            }
+            axios.post(createOrderUrl, data, {
+              headers: headers
+            });
+
             var id = ids[x];
             models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
               if (err) console.log('ОШИБКА ОБНОВЛЕНИЯ!!!');
