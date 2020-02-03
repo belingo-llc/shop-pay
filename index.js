@@ -1066,8 +1066,9 @@ new CronJob('*/1 * * * *', () => {
             axios.get(
               'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+shop[x].telephone,
               {
-                headers: headers
-              }, {auth: {username: 'Admin@9645054848',password: 'marmar3587133mar'}}).then(function(response) {
+                headers: headers,
+                auth: {username: 'Admin@9645054848',password: 'marmar3587133mar'}
+              }).then(function(response) {
                 console.log(response);
               }).catch(function(error) {
                 console.log(error);
