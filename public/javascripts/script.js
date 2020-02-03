@@ -757,7 +757,7 @@ $(document).ready(() => {
             $('#insta').val(insta);
             var url = '/saveshopandsberpay';
             var id_shop = "";
-            var sheet_products = JSON.parse(sessionStorage.setItem('nikDATA'));
+            var sheet_products = JSON.parse(sessionStorage.getItem('nikDATA'));
             var purchase = JSON.parse(sessionStorage.getItem('SHEETNAME'))[0];
             var delivery_sum = JSON.parse(sessionStorage.getItem('DELIVERY_SUM_MAIN'));
         } else{
