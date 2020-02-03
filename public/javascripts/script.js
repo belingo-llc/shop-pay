@@ -757,17 +757,20 @@ $(document).ready(() => {
             $('#insta').val(insta);
             var url = '/saveshopandsberpay';
             var id_shop = "";
+            var sheet_products = JSON.parse(sessionStorage.setItem('nikDATA'));
             var purchase = JSON.parse(sessionStorage.getItem('SHEETNAME'))[0];
             var delivery_sum = JSON.parse(sessionStorage.getItem('DELIVERY_SUM_MAIN'));
         } else{
             var insta = $('#insta').val();
             var url = '/saveproductsandsberpay';
+            var sheet_products = "";
             var id_shop = JSON.parse(sessionStorage.getItem('ID_SHOPPING'));
             var purchase = "";
             var delivery_sum = $('.right h4:eq(1)').text().replace(' руб.', '');
         }
 
         var data = {
+            sheet_products: sheet_products,
             ids: id_shop,
             purchase: purchase,
             nik: insta,

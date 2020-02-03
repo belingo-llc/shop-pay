@@ -53,6 +53,9 @@ const schema = new Schema(
     },
     status: {
         type: String
+    },
+    idProduct: {
+        type: Object
     }
   },
   {

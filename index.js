@@ -267,6 +267,7 @@ app.post('/saveshopandsberpay', async (req, res) => {
   const sumDelivery = req.body.sumDelivery;
   const summ = req.body.summ;
   const status = 'Регистрация оплаты';
+  const idProduct = req.body.sheet_products;
 
   var shop_one = await models.Shop.findOne({sumOrder, nik, purchase});
   if (!shop_one) {
@@ -287,7 +288,8 @@ app.post('/saveshopandsberpay', async (req, res) => {
       sumOrder,
       sumDelivery,
       summ,
-      status
+      status,
+      idProduct
     })
     .then(async sh => {
       const token = config.TOKEN_SBER;
@@ -1050,12 +1052,45 @@ new CronJob('*/1 * * * *', () => {
           for (var x = 0; x < ids.length; x++){
             console.log('Ид - ' + ids[x]);
 
+            // moysklad auth
+            const headers = {
+              'Content-Type': 'application/json',
+              'Authorization': 'Admin@9645054848:marmar3587133mar'
+            }
+
+            //search counterparty
+            var searchCounterParty = axios.get(
+              'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+values[x].telephone,
+              {
+                headers: headers
+              });
+
+            // if counterparty not exists
+            if(!searchCounterParty.rows[0]) {
+              var createCounterPartyUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/counterparty';
+              var data = {
+                "name": values[x].fio,
+                "phone": values[x].telephone,
+                "attributes": [
+                  {
+                    "id": "9d6ea88b-02aa-11e9-9ff4-3150002312fb",
+                    "name": "Ник в Instagram",
+                    "type": "string",
+                    "value": values[x].nik
+                  }
+                ]
+              }
+              var counterparty = axios.post(createCounterPartyUrl, data, {
+                headers: headers
+              }).meta.href;
+            }else{
+              var counterparty = searchCounterParty.rows[0].meta.href;
+            }
+
+            //search product
+
             // create order in moysklad
             var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
-            var searchCounterPartyUrl = '';
-            var createCounterPartyUrl = '';
-            var searchProductUrl = '';
-            var createProductUrl = '';
             var data = {
               "name": values[x].numOrder,
               "organization": {
@@ -1067,23 +1102,20 @@ new CronJob('*/1 * * * *', () => {
               },
               "agent": {
                 "meta": {
-                  "href": "https://online.moysklad.ru/api/remap/1.1/entity/counterparty/20978216-9f37-11e9-912f-f3d400151326",
+                  "href": counterparty,
                   "type": "counterparty",
                   "mediaType": "application/json"
                 }
               },
               "state": {
                 "meta": {
-                  "href": "https://online.moysklad.ru/api/remap/1.1/entity/customerorder/metadata/states/8d24e1fc-3916-11e9-912f-f3d400263b88",
+                  "href": "https://online.moysklad.ru/api/remap/1.1/entity/customerorder/metadata/states/dd8bc4ce-caef-11e8-9109-f8fc0033f16b",
                   "type": "state",
                   "mediaType": "application/json"
                 }
               }
             }
-            const headers = {
-              'Content-Type': 'application/json',
-              'Authorization': 'Admin@9645054848:marmar3587133mar'
-            }
+            
             axios.post(createOrderUrl, data, {
               headers: headers
             });
