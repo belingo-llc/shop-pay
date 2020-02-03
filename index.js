@@ -1052,7 +1052,7 @@ new CronJob('*/1 * * * *', () => {
           for (var x = 0; x < ids.length; x++){
             console.log('Ид - ' + ids[x]);
 
-            console.log(shop[x]);
+            //console.log(shop[x]);
 
             const { base64encode, base64decode } = require('nodejs-base64');
 
@@ -1127,9 +1127,9 @@ new CronJob('*/1 * * * *', () => {
             });*/
 
             var id = ids[x];
-            models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
+            /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
               if (err) console.log('ОШИБКА ОБНОВЛЕНИЯ!!!');
-            });
+            });*/
           }
         })
         .catch(errqw => {
