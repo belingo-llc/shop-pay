@@ -1052,6 +1052,8 @@ new CronJob('*/1 * * * *', () => {
           for (var x = 0; x < ids.length; x++){
             console.log('Ид - ' + ids[x]);
 
+            console.log(values[x].idProduct);
+
             // moysklad auth
             const headers = {
               'Content-Type': 'application/json',
