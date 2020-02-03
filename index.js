@@ -1149,7 +1149,7 @@ new CronJob('*/1 * * * *', () => {
                 }).then(function(response) {
                   console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
                 }).catch(function(error) {
-                  console.log('error');
+                  console.log(error);
                 });
               }
             }).catch(function(error) {
