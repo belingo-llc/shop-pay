@@ -1071,9 +1071,33 @@ new CronJob('*/1 * * * *', () => {
               auth: {username: ms_login,password: ms_pass}
             }).then(function(response) {
               if(response.data.rows.length > 0) {
-                console.log('Найден контрагент '+response.data.rows[0].meta.href);
+                var counterparty = response.data.rows[0].meta.href;
+                console.log('Найден контрагент '+counterparty);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
+                // if counterparty not exists
+                var createCounterPartyUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/counterparty';
+                var data = {
+                  "name": shop[x].fio,
+                  "phone": shop[x].telephone,
+                  "attributes": [
+                    {
+                      "id": "9d6ea88b-02aa-11e9-9ff4-3150002312fb",
+                      "name": "Ник в Instagram",
+                      "type": "string",
+                      "value": shop[x].nik
+                    }
+                  ]
+                }
+                axios.post(createCounterPartyUrl, data, {
+                  headers: headers,
+                  auth: {username: ms_login,password: ms_pass}
+                }).then(function(response) {
+                  var counterparty = response.data.meta.href;
+                  console.log('Добавлен новый контрагент '+counterparty);
+                }).catch(function(error) {
+                  console.log(error);
+                });
               }
             }).catch(function(error) {
               console.log(error);
