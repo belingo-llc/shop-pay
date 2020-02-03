@@ -1062,30 +1062,33 @@ new CronJob('*/1 * * * *', () => {
             }
             const ms_login = 'Admin@9645054848';
             const ms_pass = 'marmar3587133mar';
+            const ms_telephone = shop[x].telephone;
+            const ms_fio = shop[x].fio;
+            const ms_nik = shop[x].nik;
 
             //search counterparty
             axios.get(
-              'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+shop[x].telephone,
+              'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+ms_telephone,
             {
               headers: headers,
               auth: {username: ms_login,password: ms_pass}
             }).then(function(response) {
               if(response.data.rows.length > 0) {
-                var counterparty = response.data.rows[0].meta.href;
+                const counterparty = response.data.rows[0].meta.href;
                 console.log('Найден контрагент '+counterparty);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
                 // if counterparty not exists
                 var createCounterPartyUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/counterparty';
                 var data = {
-                  "name": shop[x].fio,
-                  "phone": shop[x].telephone,
+                  "name": ms_fio,
+                  "phone": ms_telephone,
                   "attributes": [
                     {
                       "id": "9d6ea88b-02aa-11e9-9ff4-3150002312fb",
                       "name": "Ник в Instagram",
                       "type": "string",
-                      "value": shop[x].nik
+                      "value": ms_nik
                     }
                   ]
                 }
@@ -1093,7 +1096,7 @@ new CronJob('*/1 * * * *', () => {
                   headers: headers,
                   auth: {username: ms_login,password: ms_pass}
                 }).then(function(response) {
-                  var counterparty = response.data.meta.href;
+                  const counterparty = response.data.meta.href;
                   console.log('Добавлен новый контрагент '+counterparty);
                 }).catch(function(error) {
                   console.log(error);
