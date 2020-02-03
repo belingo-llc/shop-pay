@@ -1064,7 +1064,7 @@ new CronJob('*/1 * * * *', () => {
 
             //search counterparty
             var searchCounterParty = axios.get(
-              'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+shop[x].telephone,
+              'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search=+79163288429',
               {
                 headers: headers
               });
@@ -1072,7 +1072,7 @@ new CronJob('*/1 * * * *', () => {
             console.log(searchCounterParty);
 
             // if counterparty not exists
-            if(!searchCounterParty.rows[0]) {
+            /*if(!searchCounterParty.rows[0]) {
               var createCounterPartyUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/counterparty';
               var data = {
                 "name": shop[x].fio,
@@ -1091,12 +1091,12 @@ new CronJob('*/1 * * * *', () => {
               }).meta.href;
             }else{
               var counterparty = searchCounterParty.rows[0].meta.href;
-            }
+            }*/
 
             //search product
 
             // create order in moysklad
-            var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
+            /*var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
             var data = {
               "name": shop[x].numOrder,
               "organization": {
@@ -1124,7 +1124,7 @@ new CronJob('*/1 * * * *', () => {
             
             axios.post(createOrderUrl, data, {
               headers: headers
-            });
+            });*/
 
             var id = ids[x];
             models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
