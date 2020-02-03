@@ -1069,7 +1069,7 @@ new CronJob('*/1 * * * *', () => {
                 headers: headers
               });
 
-            //console.log(searchCounterParty);
+            console.log(searchCounterParty.rows[0].meta.href);
 
             // if counterparty not exists
             /*if(!searchCounterParty.rows[0]) {
