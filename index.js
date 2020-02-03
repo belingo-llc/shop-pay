@@ -1052,10 +1052,6 @@ new CronJob('*/1 * * * *', () => {
           for (var x = 0; x < ids.length; x++){
             console.log('Ид - ' + ids[x]);
 
-            //console.log(shop[x]);
-
-            //const { base64encode, base64decode } = require('nodejs-base64');
-
             // moysklad auth
             const headers = {
               'Content-Type': 'application/json',
@@ -1065,6 +1061,7 @@ new CronJob('*/1 * * * *', () => {
             const ms_telephone = shop[x].telephone;
             const ms_fio = shop[x].fio;
             const ms_nik = shop[x].nik;
+            const ms_numOrder = shop[x].numOrder;
 
             //search counterparty
             axios.get(
@@ -1106,34 +1103,23 @@ new CronJob('*/1 * * * *', () => {
               console.log(error);
             });
 
-            // if counterparty not exists
-            /*if(!searchCounterParty.rows[0]) {
-              var createCounterPartyUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/counterparty';
-              var data = {
-                "name": shop[x].fio,
-                "phone": shop[x].telephone,
-                "attributes": [
-                  {
-                    "id": "9d6ea88b-02aa-11e9-9ff4-3150002312fb",
-                    "name": "Ник в Instagram",
-                    "type": "string",
-                    "value": shop[x].nik
-                  }
-                ]
-              }
-              var counterparty = axios.post(createCounterPartyUrl, data, {
-                headers: headers
-              }).meta.href;
-            }else{
-              var counterparty = searchCounterParty.rows[0].meta.href;
-            }*/
+            // search product
 
-            //search product
-
+            // search order in moysklad
+            axios.get(
+              'https://online.moysklad.ru/api/remap/1.1/entity/customerorder?filter=name='+ms_numOrder,
+            {
+              headers: headers,
+              auth: {username: ms_login,password: ms_pass}
+            }).then(function(response) {
+              console.log(response);
+            }).catch(function(error) {
+              console.log(error);
+            });
             // create order in moysklad
             /*var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
             var data = {
-              "name": shop[x].numOrder,
+              "name": ms_numOrder,
               "organization": {
                 "meta": {
                   "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
@@ -1156,9 +1142,9 @@ new CronJob('*/1 * * * *', () => {
                 }
               }
             }
-            
             axios.post(createOrderUrl, data, {
-              headers: headers
+              headers: headers,
+              auth: {username: ms_login,password: ms_pass}
             });*/
 
             var id = ids[x];
