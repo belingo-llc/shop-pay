@@ -1069,6 +1069,8 @@ new CronJob('*/1 * * * *', () => {
                 headers: headers
               });
 
+            console.log(searchCounterParty.rows);
+
             if(searchCounterParty.rows.length > 0) {
               console.log(searchCounterParty.rows[0].meta.href);
             }else{
