@@ -1052,12 +1052,12 @@ new CronJob('*/1 * * * *', () => {
           for (var x = 0; x < ids.length; x++){
             console.log('Ид - ' + ids[x]);
 
-            console.log(values[x].idProduct);
+            console.log(values[x]);
 
             // moysklad auth
             const headers = {
               'Content-Type': 'application/json',
-              'Authorization': 'Admin@9645054848:marmar3587133mar'
+              'Authorization': Buffer.from('Admin@9645054848:marmar3587133mar').toString('base64');
             }
 
             //search counterparty
