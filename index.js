@@ -1059,14 +1059,18 @@ new CronJob('*/1 * * * *', () => {
             // moysklad auth
             const headers = {
               'Content-Type': 'application/json',
-              'Authorization': 'Admin@9645054848:marmar3587133mar'
+              //'Authorization': 'Admin@9645054848:marmar3587133mar'
             }
 
             //search counterparty
-            var searchCounterParty = axios.get(
+            axios.get(
               'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+shop[x].telephone,
               {
                 headers: headers
+              }, {auth: {username: 'Admin@9645054848',password: 'marmar3587133mar'}}).then(function(response) {
+                console.log(response);
+              }).catch(function(error) {
+                console.log(error);
               });
 
             console.log(searchCounterParty.rows);
