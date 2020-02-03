@@ -1054,12 +1054,12 @@ new CronJob('*/1 * * * *', () => {
 
             //console.log(shop[x]);
 
-            const { base64encode, base64decode } = require('nodejs-base64');
+            //const { base64encode, base64decode } = require('nodejs-base64');
 
             // moysklad auth
             const headers = {
               'Content-Type': 'application/json',
-              'Authorization': base64encode('Admin@9645054848:marmar3587133mar')
+              'Authorization': 'Admin@9645054848:marmar3587133mar'
             }
 
             //search counterparty
