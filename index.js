@@ -1052,7 +1052,7 @@ new CronJob('*/1 * * * *', () => {
           for (var x = 0; x < ids.length; x++){
             console.log('Ид - ' + ids[x]);
 
-            console.log(values[x]);
+            console.log(shop[x]);
 
             const { base64encode, base64decode } = require('nodejs-base64');
 
@@ -1064,7 +1064,7 @@ new CronJob('*/1 * * * *', () => {
 
             //search counterparty
             var searchCounterParty = axios.get(
-              'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+values[x].telephone,
+              'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+shop[x].telephone,
               {
                 headers: headers
               });
@@ -1075,14 +1075,14 @@ new CronJob('*/1 * * * *', () => {
             if(!searchCounterParty.rows[0]) {
               var createCounterPartyUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/counterparty';
               var data = {
-                "name": values[x].fio,
-                "phone": values[x].telephone,
+                "name": shop[x].fio,
+                "phone": shop[x].telephone,
                 "attributes": [
                   {
                     "id": "9d6ea88b-02aa-11e9-9ff4-3150002312fb",
                     "name": "Ник в Instagram",
                     "type": "string",
-                    "value": values[x].nik
+                    "value": shop[x].nik
                   }
                 ]
               }
@@ -1098,7 +1098,7 @@ new CronJob('*/1 * * * *', () => {
             // create order in moysklad
             var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
             var data = {
-              "name": values[x].numOrder,
+              "name": shop[x].numOrder,
               "organization": {
                 "meta": {
                   "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
