@@ -1064,12 +1064,16 @@ new CronJob('*/1 * * * *', () => {
 
             //search counterparty
             var searchCounterParty = axios.get(
-              'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search=+79163288429',
+              'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+shop[x].telephone,
               {
                 headers: headers
               });
 
-            console.log(searchCounterParty.rows[0].meta.href);
+            if(searchCounterParty.rows.length > 0) {
+              console.log(searchCounterParty.rows[0].meta.href);
+            }else{
+              console.log("Контрагент не найден! Будет создан новый.");
+            }
 
             // if counterparty not exists
             /*if(!searchCounterParty.rows[0]) {
