@@ -1052,6 +1052,10 @@ new CronJob('*/1 * * * *', () => {
 
             // create order in moysklad
             var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
+            var searchCounterPartyUrl = '';
+            var createCounterPartyUrl = '';
+            var searchProductUrl = '';
+            var createProductUrl = '';
             var data = {
               "name": values[x].numOrder,
               "organization": {
