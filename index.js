@@ -1057,7 +1057,7 @@ new CronJob('*/1 * * * *', () => {
             // moysklad auth
             const headers = {
               'Content-Type': 'application/json',
-              'Authorization': base64encode('Admin@9645054848:marmar3587133mar');
+              'Authorization': base64encode('Admin@9645054848:marmar3587133mar')
             }
 
             //search counterparty
