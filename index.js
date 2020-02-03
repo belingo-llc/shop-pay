@@ -1059,28 +1059,25 @@ new CronJob('*/1 * * * *', () => {
             // moysklad auth
             const headers = {
               'Content-Type': 'application/json',
-              //'Authorization': 'Admin@9645054848:marmar3587133mar'
             }
+            const ms_login = 'Admin@9645054848';
+            const ms_pass = 'marmar3587133mar';
 
             //search counterparty
             axios.get(
               'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+shop[x].telephone,
-              {
-                headers: headers,
-                auth: {username: 'Admin@9645054848',password: 'marmar3587133mar'}
-              }).then(function(response) {
-                console.log(response);
-              }).catch(function(error) {
-                console.log(error);
-              });
-
-            console.log(searchCounterParty.rows);
-
-            if(searchCounterParty.rows.length > 0) {
-              console.log(searchCounterParty.rows[0].meta.href);
-            }else{
-              console.log("Контрагент не найден! Будет создан новый.");
-            }
+            {
+              headers: headers,
+              auth: {username: ms_login,password: ms_pass}
+            }).then(function(response) {
+              if(response.data.rows.length > 0) {
+                console.log('Найден контрагент '+response.data.rows[0].meta.href);
+              }else{
+                console.log('Контрагент не найден. Будет создан новый!');
+              }
+            }).catch(function(error) {
+              console.log(error);
+            });
 
             // if counterparty not exists
             /*if(!searchCounterParty.rows[0]) {
