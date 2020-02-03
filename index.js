@@ -1069,6 +1069,8 @@ new CronJob('*/1 * * * *', () => {
                 headers: headers
               });
 
+            console.log(searchCounterParty);
+
             // if counterparty not exists
             if(!searchCounterParty.rows[0]) {
               var createCounterPartyUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/counterparty';
