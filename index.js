@@ -1054,6 +1054,8 @@ new CronJob('*/1 * * * *', () => {
 
             console.log(values[x]);
 
+            const { base64encode, base64decode } = require('nodejs-base64');
+
             // moysklad auth
             const headers = {
               'Content-Type': 'application/json',
