@@ -1113,7 +1113,6 @@ new CronJob('*/1 * * * *', () => {
               auth: {username: ms_login,password: ms_pass}
             }).then(function(response) {
               if(response.data.rows.length > 0) {
-                const counterparty = response.data.rows[0].meta.href;
                 console.log('Заказ №'+ms_numOrder+' уже создан!');
               }else{
                 // create order in moysklad
