@@ -940,7 +940,7 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
-    function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
+    function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
 
       // search order in moysklad
       axios.get(
@@ -976,7 +976,8 @@ new CronJob('*/1 * * * *', () => {
                 "type": "state",
                 "mediaType": "application/json"
               }
-            }
+            },
+            "description": ms_delivery+' '+ms_delivery_address
           }
           axios.post(createOrderUrl, data, {
             headers: headers,
@@ -986,8 +987,8 @@ new CronJob('*/1 * * * *', () => {
             global.order_ms_id = response.data.id;
 
             for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
-              col = ms_idProduct[ms_purchase].col[i];
-              price = ms_idProduct[ms_purchase].price[i];
+              const col = ms_idProduct[ms_purchase].col[i];
+              const price = ms_idProduct[ms_purchase].price[i];
               axios.get(
                 'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
               {
@@ -1149,6 +1150,8 @@ new CronJob('*/1 * * * *', () => {
             const ms_numOrder = shop[x].numOrder;
             const ms_idProduct = shop[x].idProduct;
             const ms_purchase = shop[x].purchase;
+            const ms_delivery = shop[x].delivery;
+            const ms_delivery_address = shop[x].deliveryAddress;
 
             //search counterparty
             axios.get(
@@ -1160,7 +1163,7 @@ new CronJob('*/1 * * * *', () => {
               if(response.data.rows.length > 0) {
                 const counterparty = response.data.rows[0].meta.href;
                 console.log('Найден контрагент '+counterparty);
-                create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass);
+                create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
                 // if counterparty not exists
@@ -1183,7 +1186,7 @@ new CronJob('*/1 * * * *', () => {
                 }).then(function(response) {
                   const counterparty = response.data.meta.href;
                   console.log('Добавлен новый контрагент '+counterparty);
-                  create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass);
+                  create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
                 }).catch(function(error) {
                   console.log(error);
                 });
