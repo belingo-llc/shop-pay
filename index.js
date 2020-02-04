@@ -940,7 +940,7 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
-    function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
+    function create_ms_order(ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
 
       // search order in moysklad
       axios.get(
@@ -977,7 +977,7 @@ new CronJob('*/1 * * * *', () => {
                 "mediaType": "application/json"
               }
             },
-            "description": ms_delivery+' '+ms_delivery_address
+            "description": ms_delivery+' '+ms_delivery_address+' '+ms_street+' '+ms_home+' '+ms_room 
           }
           axios.post(createOrderUrl, data, {
             headers: headers,
@@ -1152,6 +1152,9 @@ new CronJob('*/1 * * * *', () => {
             const ms_purchase = shop[x].purchase;
             const ms_delivery = shop[x].delivery;
             const ms_delivery_address = shop[x].deliveryAddress;
+            const ms_street = shop[x].street,
+            const ms_home = shop[x].home,
+            const ms_room = shop[x].room
 
             //search counterparty
             axios.get(
@@ -1163,7 +1166,7 @@ new CronJob('*/1 * * * *', () => {
               if(response.data.rows.length > 0) {
                 const counterparty = response.data.rows[0].meta.href;
                 console.log('Найден контрагент '+counterparty);
-                create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
+                create_ms_order(ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
                 // if counterparty not exists
@@ -1186,7 +1189,7 @@ new CronJob('*/1 * * * *', () => {
                 }).then(function(response) {
                   const counterparty = response.data.meta.href;
                   console.log('Добавлен новый контрагент '+counterparty);
-                  create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
+                  create_ms_order(ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
                 }).catch(function(error) {
                   console.log(error);
                 });
