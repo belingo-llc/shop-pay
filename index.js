@@ -997,8 +997,8 @@ new CronJob('*/1 * * * *', () => {
               }).then(function(response) {
                 if(response.data.rows.length > 0) {
                   var data = {
-                    "quantity": col,
-                    "price": price*100,
+                    "quantity": parseInt(col),
+                    "price": parseInt(price)*100,
                     "assortment": {
                       "meta": {
                         "href": response.data.rows[0].meta.href,
