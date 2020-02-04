@@ -988,7 +988,7 @@ new CronJob('*/1 * * * *', () => {
             global.positions_col = ms_idProduct[ms_purchase].col;
             global.positions_price = ms_idProduct[ms_purchase].price;
             global.positions_delivery = ms_idProduct[ms_purchase].delivery;
-            global.order_ms_id = response.meta.href;
+            global.order_ms_id = response.data.meta.href;
 
             for (var i = 0; i < global.positions_count; i++) {
               axios.get(
