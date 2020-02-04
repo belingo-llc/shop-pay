@@ -1072,7 +1072,6 @@ new CronJob('*/1 * * * *', () => {
             }).then(function(response) {
               if(response.data.rows.length > 0) {
                 const counterparty = response.data.rows[0].meta.href;
-                global.counterparty = counterparty;
                 console.log('Найден контрагент '+counterparty);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
@@ -1095,20 +1094,10 @@ new CronJob('*/1 * * * *', () => {
                   auth: {username: ms_login,password: ms_pass}
                 }).then(function(response) {
                   const counterparty = response.data.meta.href;
-                  global.counterparty = counterparty;
                   console.log('Добавлен новый контрагент '+counterparty);
-                }).catch(function(error) {
-                  console.log(error);
                 });
               }
-            }).catch(function(error) {
-              console.log(error);
-            });
-
-            // search product
-
-            // search order in moysklad
-            setTimeout(function() {
+              // search order in moysklad
               axios.get(
                 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder?filter=name='+ms_numOrder,
               {
@@ -1116,7 +1105,7 @@ new CronJob('*/1 * * * *', () => {
                 auth: {username: ms_login,password: ms_pass}
               }).then(function(response) {
                 if(response.data.rows.length > 0) {
-                  console.log('Заказ №'+ms_numOrder+' уже создан!');
+                  console.log('Заказ №'+ms_numOrder+' уже существует!');
                 }else{
                   // create order in moysklad
                   var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
@@ -1131,7 +1120,7 @@ new CronJob('*/1 * * * *', () => {
                     },
                     "agent": {
                       "meta": {
-                        "href": global.counterparty,
+                        "href": counterparty,
                         "type": "counterparty",
                         "mediaType": "application/json"
                       }
@@ -1156,7 +1145,11 @@ new CronJob('*/1 * * * *', () => {
               }).catch(function(error) {
                 console.log(error);
               });
-            }, 30000);
+            }).catch(function(error) {
+              console.log(error);
+            });
+
+            // search product
 
             var id = ids[x];
             /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
