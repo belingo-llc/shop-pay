@@ -990,8 +990,7 @@ new CronJob('*/1 * * * *', () => {
           }).then(function(response) {
             console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
             global.order_ms_id = response.data.id;
-            console.log(global.positions_col);
-            console.log(global.positions_price);
+            
             for (var i = 0; i < global.positions_count; i++) {
               axios.get(
                 'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(global.positions_art[i]),
@@ -1000,8 +999,8 @@ new CronJob('*/1 * * * *', () => {
                 auth: {username: ms_login,password: ms_pass}
               }).then(function(response) {
                 var data = {
-                  "quantity": global.positions_col[i],
-                  "price": global.positions_price[i]*100,
+                  "quantity": parseInt(global.positions_col[i]),
+                  "price": parseInt(global.positions_price[i])*100,
                   "assortment": {
                     "meta": {
                       "href": response.data.rows[0].meta.href,
