@@ -942,7 +942,7 @@ new CronJob('*/1 * * * *', () => {
     }
     function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
 
-      console.log(ms_idProduct.ms_purchase.name);
+      console.log(ms_idProduct[ms_purchase].name);
 
       /*const positions_count = ms_idProduct.[ms_purchase].name.length;
       const positions_art = ms_idProduct.[ms_purchase].art;
