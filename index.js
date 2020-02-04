@@ -1072,7 +1072,6 @@ new CronJob('*/1 * * * *', () => {
             }).then(function(response) {
               if(response.data.rows.length > 0) {
                 const counterparty = response.data.rows[0].meta.href;
-                global.counterparty = counterparty;
                 console.log('Найден контрагент '+counterparty);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
@@ -1095,7 +1094,6 @@ new CronJob('*/1 * * * *', () => {
                   auth: {username: ms_login,password: ms_pass}
                 }).then(function(response) {
                   const counterparty = response.data.meta.href;
-                  global.counterparty = counterparty;
                   console.log('Добавлен новый контрагент '+counterparty);
                 }).catch(function(error) {
                   console.log(error);
@@ -1108,53 +1106,55 @@ new CronJob('*/1 * * * *', () => {
             // search product
 
             // search order in moysklad
-            axios.get(
-              'https://online.moysklad.ru/api/remap/1.1/entity/customerorder?filter=name='+ms_numOrder,
-            {
-              headers: headers,
-              auth: {username: ms_login,password: ms_pass}
-            }).then(function(response) {
-              if(response.data.rows.length > 0) {
-                console.log('Заказ №'+ms_numOrder+' уже создан!');
-              }else{
-                // create order in moysklad
-                var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
-                var data = {
-                  "name": ms_numOrder,
-                  "organization": {
-                    "meta": {
-                      "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
-                      "type": "organization",
-                      "mediaType": "application/json"
-                    }
-                  },
-                  "agent": {
-                    "meta": {
-                      "href": global.counterparty,
-                      "type": "counterparty",
-                      "mediaType": "application/json"
-                    }
-                  },
-                  "state": {
-                    "meta": {
-                      "href": "https://online.moysklad.ru/api/remap/1.1/entity/customerorder/metadata/states/dd8bc4ce-caef-11e8-9109-f8fc0033f16b",
-                      "type": "state",
-                      "mediaType": "application/json"
+            setTimeout(function() {
+              axios.get(
+                'https://online.moysklad.ru/api/remap/1.1/entity/customerorder?filter=name='+ms_numOrder,
+              {
+                headers: headers,
+                auth: {username: ms_login,password: ms_pass}
+              }).then(function(response) {
+                if(response.data.rows.length > 0) {
+                  console.log('Заказ №'+ms_numOrder+' уже создан!');
+                }else{
+                  // create order in moysklad
+                  var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
+                  var data = {
+                    "name": ms_numOrder,
+                    "organization": {
+                      "meta": {
+                        "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
+                        "type": "organization",
+                        "mediaType": "application/json"
+                      }
+                    },
+                    "agent": {
+                      "meta": {
+                        "href": counterparty,
+                        "type": "counterparty",
+                        "mediaType": "application/json"
+                      }
+                    },
+                    "state": {
+                      "meta": {
+                        "href": "https://online.moysklad.ru/api/remap/1.1/entity/customerorder/metadata/states/dd8bc4ce-caef-11e8-9109-f8fc0033f16b",
+                        "type": "state",
+                        "mediaType": "application/json"
+                      }
                     }
                   }
+                  axios.post(createOrderUrl, data, {
+                    headers: headers,
+                    auth: {username: ms_login,password: ms_pass}
+                  }).then(function(response) {
+                    console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
+                  }).catch(function(error) {
+                    console.log(error);
+                  });
                 }
-                axios.post(createOrderUrl, data, {
-                  headers: headers,
-                  auth: {username: ms_login,password: ms_pass}
-                }).then(function(response) {
-                  console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
-                }).catch(function(error) {
-                  console.log(error);
-                });
-              }
-            }).catch(function(error) {
-              console.log(error);
-            });
+              }).catch(function(error) {
+                console.log(error);
+              });
+            }, 3000);
 
             var id = ids[x];
             /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
