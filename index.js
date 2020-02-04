@@ -984,7 +984,7 @@ new CronJob('*/1 * * * *', () => {
             auth: {username: ms_login,password: ms_pass}
           }).then(function(response) {
             console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
-            global.order_ms_id = response.data.id;
+            var order_ms_id = response.data.id;
 
             for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
               var col = ms_idProduct[ms_purchase].col[i];
@@ -1007,7 +1007,7 @@ new CronJob('*/1 * * * *', () => {
                       }
                     }
                   }
-                  axios.post('https://online.moysklad.ru/api/remap/1.1/entity/customerorder/'+global.order_ms_id+'/positions', data, {
+                  axios.post('https://online.moysklad.ru/api/remap/1.1/entity/customerorder/'+order_ms_id+'/positions', data, {
                     headers: headers,
                     auth: {username: ms_login,password: ms_pass}
                   }).catch(function(error) {
