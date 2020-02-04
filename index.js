@@ -941,14 +941,13 @@ new CronJob('*/1 * * * *', () => {
       });
     }
     async function getProduct(article,ms_login,ms_pass,headers) {
-      const response = await axios.get(
+      var response = await axios.get(
           'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(article),
         {
           headers: headers,
           auth: {username: ms_login,password: ms_pass}
         });
-      const data = await response; 
-      return data; 
+      return response;  
     }
     function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
 
