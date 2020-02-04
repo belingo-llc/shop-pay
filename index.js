@@ -1025,17 +1025,14 @@ new CronJob('*/1 * * * *', () => {
                     },
                     "positions": [{
                 "quantity": 1,
-                "price": 1,
-                "discount": 0,
-                "vat": 0,
+                "price": 1*100,
                 "assortment": {
                   "meta": {
                     "href": "https://online.moysklad.ru/api/remap/1.1/entity/product/9365022a-7fd1-11e9-912f-f3d4001bb66d",
                     "type": "product",
                     "mediaType": "application/json"
                   }
-                },
-                "reserve": 1
+                }
               }]
                   }
                   axios.post(createOrderUrl, data, {
