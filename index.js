@@ -985,6 +985,8 @@ new CronJob('*/1 * * * *', () => {
           }).then(function(response) {
             console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
             var order_ms_id = response.data.id;
+            console.log(ms_idProduct[ms_purchase].col);
+            console.log(ms_idProduct[ms_purchase].price);
 
             for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
               var col = ms_idProduct[ms_purchase].col[i];
