@@ -1009,7 +1009,7 @@ new CronJob('*/1 * * * *', () => {
                   headers: headers,
                   auth: {username: ms_login,password: ms_pass}
                 }).catch(function(error) {
-                  console.log(error);
+                  console.log(error.data.errors);
                 });
               }).catch(function(error) {
                  console.log(error);
