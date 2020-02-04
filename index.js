@@ -952,7 +952,6 @@ new CronJob('*/1 * * * *', () => {
 
       for (var i = 0; i < positions_count; i++) {
         // search product
-        urlencoded(0)
         axios.get(
           'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(positions_art[i]),
         {
@@ -983,6 +982,8 @@ new CronJob('*/1 * * * *', () => {
           console.log(error);
         });
       }
+
+      console.log(positions);
 
       // search order in moysklad
               axios.get(
