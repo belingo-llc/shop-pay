@@ -966,9 +966,9 @@ new CronJob('*/1 * * * *', () => {
         // search product
         global.product_resp = '';
         getProduct(positions_art[i],ms_login,ms_pass,headers);
-        console.log(global.product_resp);
         const product_resp = global.product_resp
-        if(product_resp.data.rows.length > 0) {
+        console.log(product_resp);
+        /*if(product_resp.data.rows.length > 0) {
             const product = product_resp.data.rows[0].meta.href;
             positions.push(
               {
@@ -983,7 +983,7 @@ new CronJob('*/1 * * * *', () => {
                 }
               }
             );
-          }
+          }*/
         /*.then(function(response) {
           if(response.data.rows.length > 0) {
             const product = response.data.rows[0].meta.href;
