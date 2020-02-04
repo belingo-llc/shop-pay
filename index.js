@@ -947,7 +947,7 @@ new CronJob('*/1 * * * *', () => {
           headers: headers,
           auth: {username: ms_login,password: ms_pass}
         });
-      const data = await response.json(); 
+      const data = await response; 
       return data; 
     }
     function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
