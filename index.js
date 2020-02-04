@@ -952,12 +952,14 @@ new CronJob('*/1 * * * *', () => {
 
       for (var i = 0; i < positions_count; i++) {
         // search product
+        urlencoded(0)
         axios.get(
-          'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+positions_art[i],
+          'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(positions_art[i]),
         {
           headers: headers,
           auth: {username: ms_login,password: ms_pass}
         }).then(function(response) {
+          console.log(response);
           if(response.data.rows.length > 0) {
             const product = response.data.rows[0].meta.href;
             positions.push(
