@@ -984,6 +984,8 @@ new CronJob('*/1 * * * *', () => {
         });
       }
 
+      console.log(positions);
+
       // search order in moysklad
               axios.get(
                 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder?filter=name='+ms_numOrder,
