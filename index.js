@@ -984,7 +984,7 @@ new CronJob('*/1 * * * *', () => {
         });
       }
 
-      console.log(positions);
+      console.log(global.positions);
 
       // search order in moysklad
               axios.get(
