@@ -942,12 +942,6 @@ new CronJob('*/1 * * * *', () => {
     }
     function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
 
-      global.positions_count = ms_idProduct[ms_purchase].name.length;
-      global.positions_art = ms_idProduct[ms_purchase].art;
-      global.positions_col = ms_idProduct[ms_purchase].col;
-      global.positions_price = ms_idProduct[ms_purchase].price;
-      global.positions_delivery = ms_idProduct[ms_purchase].delivery;
-
       // search order in moysklad
       axios.get(
         'https://online.moysklad.ru/api/remap/1.1/entity/customerorder?filter=name='+ms_numOrder,
@@ -991,21 +985,17 @@ new CronJob('*/1 * * * *', () => {
             console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
             global.order_ms_id = response.data.id;
 
-            for (var i = 0; i < global.positions_count; i++) {
-              global.positions_col_i = global.positions_col[i];
-              global.positions_price_i = global.positions_price[i];
-              console.log(global.positions_art);
-              console.log(global.positions_col);
-              console.log(global.positions_price);
+            for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
+              console.log(ms_idProduct[ms_purchase].price[i]);
               axios.get(
-                'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(global.positions_art[i]),
+                'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
               {
                 headers: headers,
                 auth: {username: ms_login,password: ms_pass}
               }).then(function(response) {
                 var data = {
-                  "quantity": parseInt(global.positions_col_i),
-                  "price": parseInt(global.positions_price_i)*100,
+                  "quantity": parseInt(ms_idProduct[ms_purchase].col[i]),
+                  "price": parseInt(ms_idProduct[ms_purchase].price[i])*100,
                   "assortment": {
                     "meta": {
                       "href": response.data.rows[0].meta.href,
