@@ -988,10 +988,14 @@ new CronJob('*/1 * * * *', () => {
             console.log(ms_idProduct[ms_purchase].col);
             console.log(ms_idProduct[ms_purchase].price);
 
+            //var already_query = [];
+
             for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
               var col = parseInt(ms_idProduct[ms_purchase].col[i]);
               var price = parseInt(ms_idProduct[ms_purchase].price[i]);
-              if(col != null && price != null) {
+              //already_query.push(ms_idProduct[ms_purchase].art[i]);
+              if(col == null) { var col = 1; }
+              //if(col != null && price != null) {
                 axios.get(
                   'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
                 {
@@ -1020,7 +1024,7 @@ new CronJob('*/1 * * * *', () => {
                 }).catch(function(error) {
                    console.log(error);
                 });
-              }
+              //}
             }
           }).catch(function(error) {
             console.log(error);
@@ -1204,9 +1208,9 @@ new CronJob('*/1 * * * *', () => {
             });
 
             var id = ids[x];
-            /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
+            models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
               if (err) console.log('ОШИБКА ОБНОВЛЕНИЯ!!!');
-            });*/
+            });
           }
         })
         .catch(errqw => {
