@@ -948,6 +948,8 @@ new CronJob('*/1 * * * *', () => {
       const positions_price = ms_idProduct[ms_purchase].price;
       const positions_delivery = ms_idProduct[ms_purchase].delivery;
 
+      console.log(ms_idProduct[ms_purchase]);
+
       const positions = [];
 
       for (var i = 0; i < positions_count; i++) {
@@ -978,7 +980,7 @@ new CronJob('*/1 * * * *', () => {
             );
           }    
         }).catch(function(error) {
-          console.log(error);
+          //console.log(error);
         });
       }
 
