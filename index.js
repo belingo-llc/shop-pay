@@ -949,6 +949,7 @@ new CronJob('*/1 * * * *', () => {
       const positions_delivery = ms_idProduct[ms_purchase].delivery;
 
       const positions = [];
+      global.positions = [];
 
       for (var i = 0; i < positions_count; i++) {
         global.col = positions_col[i];
@@ -1022,7 +1023,7 @@ new CronJob('*/1 * * * *', () => {
                         "mediaType": "application/json"
                       }
                     },
-                    "positions": positions
+                    "positions": global.positions
                   }
                   axios.post(createOrderUrl, data, {
                     headers: headers,
