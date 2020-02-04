@@ -994,6 +994,9 @@ new CronJob('*/1 * * * *', () => {
             for (var i = 0; i < global.positions_count; i++) {
               global.positions_col_i = global.positions_col[i];
               global.positions_price_i = global.positions_price[i];
+              console.log(global.positions_art);
+              console.log(global.positions_col);
+              console.log(global.positions_price);
               axios.get(
                 'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(global.positions_art[i]),
               {
