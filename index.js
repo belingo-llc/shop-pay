@@ -1154,7 +1154,7 @@ new CronJob('*/1 * * * *', () => {
               }).catch(function(error) {
                 console.log(error);
               });
-            }, 3000);
+            }, 30000);
 
             var id = ids[x];
             /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
