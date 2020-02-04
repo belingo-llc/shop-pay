@@ -1102,6 +1102,8 @@ new CronJob('*/1 * * * *', () => {
           for (var x = 0; x < ids.length; x++){
             console.log('Ид - ' + ids[x]);
 
+            console.log(shop[x].idProduct);
+
             // moysklad auth
             const headers = {
               'Content-Type': 'application/json',
@@ -1155,8 +1157,6 @@ new CronJob('*/1 * * * *', () => {
             }).catch(function(error) {
               console.log(error);
             });
-
-            // search product
 
             var id = ids[x];
             /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
