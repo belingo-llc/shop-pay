@@ -942,6 +942,12 @@ new CronJob('*/1 * * * *', () => {
     }
     function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
 
+      global.positions_count = ms_idProduct[ms_purchase].name.length;
+      global.positions_art = ms_idProduct[ms_purchase].art;
+      global.positions_col = ms_idProduct[ms_purchase].col;
+      global.positions_price = ms_idProduct[ms_purchase].price;
+      global.positions_delivery = ms_idProduct[ms_purchase].delivery;
+
       // search order in moysklad
       axios.get(
         'https://online.moysklad.ru/api/remap/1.1/entity/customerorder?filter=name='+ms_numOrder,
@@ -983,14 +989,7 @@ new CronJob('*/1 * * * *', () => {
             auth: {username: ms_login,password: ms_pass}
           }).then(function(response) {
             console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
-            global.positions_count = ms_idProduct[ms_purchase].name.length;
-            global.positions_art = ms_idProduct[ms_purchase].art;
-            global.positions_col = ms_idProduct[ms_purchase].col;
-            global.positions_price = ms_idProduct[ms_purchase].price;
-            global.positions_delivery = ms_idProduct[ms_purchase].delivery;
-            global.order_ms_id = response.data.meta.href;
-
-            console.log(response.data.meta.href);
+            global.order_ms_id = response.data.id;
 
             for (var i = 0; i < global.positions_count; i++) {
               axios.get(
