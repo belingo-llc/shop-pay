@@ -1152,9 +1152,9 @@ new CronJob('*/1 * * * *', () => {
             const ms_purchase = shop[x].purchase;
             const ms_delivery = shop[x].delivery;
             const ms_delivery_address = shop[x].deliveryAddress;
-            const ms_street = shop[x].street,
-            const ms_home = shop[x].home,
-            const ms_room = shop[x].room
+            const ms_street = shop[x].street;
+            const ms_home = shop[x].home;
+            const ms_room = shop[x].room;
 
             //search counterparty
             axios.get(
