@@ -987,8 +987,8 @@ new CronJob('*/1 * * * *', () => {
             global.order_ms_id = response.data.id;
 
             for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
-              col = ms_idProduct[ms_purchase].col[i];
-              price = ms_idProduct[ms_purchase].price[i];
+              var col = ms_idProduct[ms_purchase].col[i];
+              var price = ms_idProduct[ms_purchase].price[i];
               axios.get(
                 'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
               {
