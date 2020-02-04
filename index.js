@@ -942,13 +942,11 @@ new CronJob('*/1 * * * *', () => {
     }
     function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
 
-      console.log(ms_idProduct[ms_purchase].name);
-
-      /*const positions_count = ms_idProduct.[ms_purchase].name.length;
-      const positions_art = ms_idProduct.[ms_purchase].art;
-      const positions_col = ms_idProduct.[ms_purchase].col;
-      const positions_price = ms_idProduct.[ms_purchase].price;
-      const positions_delivery = ms_idProduct.[ms_purchase].delivery;
+      const positions_count = ms_idProduct[ms_purchase].name.length;
+      const positions_art = ms_idProduct[ms_purchase].art;
+      const positions_col = ms_idProduct[ms_purchase].col;
+      const positions_price = ms_idProduct[ms_purchase].price;
+      const positions_delivery = ms_idProduct[ms_purchase].delivery;
 
       const positions = [];
 
@@ -982,7 +980,7 @@ new CronJob('*/1 * * * *', () => {
         }).catch(function(error) {
           console.log(error);
         });
-      }*/
+      }
 
       // search order in moysklad
               axios.get(
