@@ -942,7 +942,7 @@ new CronJob('*/1 * * * *', () => {
     }
     function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
 
-      const positions_count = ms_idProduct[ms_purchase].name.length;
+      /*const positions_count = ms_idProduct[ms_purchase].name.length;
       const positions_art = ms_idProduct[ms_purchase].art;
       const positions_col = ms_idProduct[ms_purchase].col;
       const positions_price = ms_idProduct[ms_purchase].price;
@@ -986,7 +986,7 @@ new CronJob('*/1 * * * *', () => {
         });
       }
 
-      console.log(global.positions);
+      console.log(global.positions);*/
 
       // search order in moysklad
               axios.get(
@@ -1023,7 +1023,20 @@ new CronJob('*/1 * * * *', () => {
                         "mediaType": "application/json"
                       }
                     },
-                    "positions": global.positions
+                    "positions": [{
+                "quantity": 1,
+                "price": 1,
+                "discount": 0,
+                "vat": 0,
+                "assortment": {
+                  "meta": {
+                    "href": "https://online.moysklad.ru/api/remap/1.1/entity/product/9365022a-7fd1-11e9-912f-f3d4001bb66d",
+                    "type": "product",
+                    "mediaType": "application/json"
+                  }
+                },
+                "reserve": 1
+              }]
                   }
                   axios.post(createOrderUrl, data, {
                     headers: headers,
