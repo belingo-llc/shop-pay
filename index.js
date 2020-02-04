@@ -948,7 +948,7 @@ new CronJob('*/1 * * * *', () => {
       const positions_price = ms_idProduct[ms_purchase].price;
       const positions_delivery = ms_idProduct[ms_purchase].delivery;
 
-      global.positions = [];
+      const positions = [];
 
       for (var i = 0; i < positions_count; i++) {
         global.col = positions_col[i];
@@ -962,7 +962,7 @@ new CronJob('*/1 * * * *', () => {
         }).then(function(response) {
           if(response.data.rows.length > 0) {
             const product = response.data.rows[0].meta.href;
-            global.positions.push([
+            positions.push(
               {
                 "quantity": global.col,
                 "price": global.price,
@@ -976,7 +976,7 @@ new CronJob('*/1 * * * *', () => {
                   }
                 },
                 "reserve": global.col
-              }]
+              }
             );
           }    
         }).catch(function(error) {
@@ -984,7 +984,7 @@ new CronJob('*/1 * * * *', () => {
         });
       }
 
-      console.log(global.positions);
+      console.log(positions);
 
       // search order in moysklad
               axios.get(
