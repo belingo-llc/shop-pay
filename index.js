@@ -940,7 +940,48 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
-    function create_ms_order(ms_numOrder, counterparty, headers, ms_login, ms_pass) {
+    function create_ms_order(ms_idProduct, ms_purchase, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
+
+      const positions_count = ms_idProduct.[ms_purchase].name.length;
+      const positions_art = ms_idProduct.[ms_purchase].art;
+      const positions_col = ms_idProduct.[ms_purchase].col;
+      const positions_price = ms_idProduct.[ms_purchase].price;
+      const positions_delivery = ms_idProduct.[ms_purchase].delivery;
+
+      const positions = [];
+
+      for (var i = 0; i < positions_count; i++) {
+        // search product
+        axios.get(
+          'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+positions_art[i],
+        {
+          headers: headers,
+          auth: {username: ms_login,password: ms_pass}
+        }).then(function(response) {
+          if(response.data.rows.length > 0) {
+            const product = response.data.rows[0].meta.href;
+            positions.push(
+              {
+                "quantity": positions_col[i],
+                "price": positions_price[i],
+                "discount": 0,
+                "vat": 0,
+                "assortment": {
+                  "meta": {
+                    "href": product,
+                    "type": "product",
+                    "mediaType": "application/json"
+                  }
+                },
+                "reserve": positions_col[i]
+              }
+            );
+          }    
+        }).catch(function(error) {
+          console.log(error);
+        });
+      }
+
       // search order in moysklad
               axios.get(
                 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder?filter=name='+ms_numOrder,
@@ -975,7 +1016,8 @@ new CronJob('*/1 * * * *', () => {
                         "type": "state",
                         "mediaType": "application/json"
                       }
-                    }
+                    },
+                    "positions": positions
                   }
                   axios.post(createOrderUrl, data, {
                     headers: headers,
@@ -1114,6 +1156,8 @@ new CronJob('*/1 * * * *', () => {
             const ms_fio = shop[x].fio;
             const ms_nik = shop[x].nik;
             const ms_numOrder = shop[x].numOrder;
+            const ms_idProduct = shop[x].idProduct;
+            const ms_purchase = shop[x].purchase;
 
             //search counterparty
             axios.get(
