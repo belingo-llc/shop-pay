@@ -940,9 +940,9 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
-    function create_ms_order(ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
+    function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
 
-      console.log(ms_idProduct.name);
+      console.log(ms_idProduct.{ms_purchase}.name);
 
       /*const positions_count = ms_idProduct.[ms_purchase].name.length;
       const positions_art = ms_idProduct.[ms_purchase].art;
@@ -1146,8 +1146,6 @@ new CronJob('*/1 * * * *', () => {
           for (var x = 0; x < ids.length; x++){
             console.log('Ид - ' + ids[x]);
 
-            console.log(shop[x].idProduct);
-
             // moysklad auth
             const headers = {
               'Content-Type': 'application/json',
@@ -1171,7 +1169,7 @@ new CronJob('*/1 * * * *', () => {
               if(response.data.rows.length > 0) {
                 const counterparty = response.data.rows[0].meta.href;
                 console.log('Найден контрагент '+counterparty);
-                create_ms_order(ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass);
+                create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
                 // if counterparty not exists
@@ -1194,7 +1192,7 @@ new CronJob('*/1 * * * *', () => {
                 }).then(function(response) {
                   const counterparty = response.data.meta.href;
                   console.log('Добавлен новый контрагент '+counterparty);
-                  create_ms_order(ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass);
+                  create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass);
                 }).catch(function(error) {
                   console.log(error);
                 });
