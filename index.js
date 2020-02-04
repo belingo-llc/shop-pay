@@ -948,8 +948,6 @@ new CronJob('*/1 * * * *', () => {
       const positions_price = ms_idProduct[ms_purchase].price;
       const positions_delivery = ms_idProduct[ms_purchase].delivery;
 
-      console.log(ms_idProduct[ms_purchase]);
-
       const positions = [];
 
       for (var i = 0; i < positions_count; i++) {
@@ -964,9 +962,8 @@ new CronJob('*/1 * * * *', () => {
         }).then(function(response) {
           if(response.data.rows.length > 0) {
             const product = response.data.rows[0].meta.href;
-            positions.push(
-              {
-                "quantity": global.col,
+            positions.push([
+"quantity": global.col,
                 "price": global.price,
                 "discount": 0,
                 "vat": 0,
@@ -978,11 +975,11 @@ new CronJob('*/1 * * * *', () => {
                   }
                 },
                 "reserve": global.col
-              }
+              ]
             );
           }    
         }).catch(function(error) {
-          //console.log(error);
+          console.log(error);
         });
       }
 
