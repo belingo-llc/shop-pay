@@ -960,6 +960,7 @@ new CronJob('*/1 * * * *', () => {
           headers: headers,
           auth: {username: ms_login,password: ms_pass}
         });
+        console.log(product_resp);
         if(product_resp.data.rows.length > 0) {
             const product = product_resp.data.rows[0].meta.href;
             positions.push(
