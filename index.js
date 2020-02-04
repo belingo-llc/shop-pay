@@ -989,36 +989,38 @@ new CronJob('*/1 * * * *', () => {
             console.log(ms_idProduct[ms_purchase].price);
 
             for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
-              var col = ms_idProduct[ms_purchase].col[i];
-              var price = ms_idProduct[ms_purchase].price[i];
-              axios.get(
-                'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
-              {
-                headers: headers,
-                auth: {username: ms_login,password: ms_pass}
-              }).then(function(response) {
-                if(response.data.rows.length > 0) {
-                  var data = {
-                    "quantity": parseInt(col),
-                    "price": parseInt(price)*100,
-                    "assortment": {
-                      "meta": {
-                        "href": response.data.rows[0].meta.href,
-                         "type": "product",
-                          "mediaType": "application/json"
+              var col = parseInt(ms_idProduct[ms_purchase].col[i]);
+              var price = parseInt(ms_idProduct[ms_purchase].price[i]);
+              if(col != null || price != null) {
+                axios.get(
+                  'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
+                {
+                  headers: headers,
+                  auth: {username: ms_login,password: ms_pass}
+                }).then(function(response) {
+                  if(response.data.rows.length > 0) {
+                    var data = {
+                      "quantity": col,
+                      "price": price*100,
+                      "assortment": {
+                        "meta": {
+                          "href": response.data.rows[0].meta.href,
+                           "type": "product",
+                            "mediaType": "application/json"
+                        }
                       }
                     }
+                    axios.post('https://online.moysklad.ru/api/remap/1.1/entity/customerorder/'+order_ms_id+'/positions', data, {
+                      headers: headers,
+                      auth: {username: ms_login,password: ms_pass}
+                    }).catch(function(error) {
+                      console.log(error);
+                    });
                   }
-                  axios.post('https://online.moysklad.ru/api/remap/1.1/entity/customerorder/'+order_ms_id+'/positions', data, {
-                    headers: headers,
-                    auth: {username: ms_login,password: ms_pass}
-                  }).catch(function(error) {
-                    console.log(error);
-                  });
-                }
-              }).catch(function(error) {
-                 console.log(error);
-              });
+                }).catch(function(error) {
+                   console.log(error);
+                });
+              }
             }
           }).catch(function(error) {
             console.log(error);
