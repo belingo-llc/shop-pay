@@ -943,7 +943,7 @@ new CronJob('*/1 * * * *', () => {
     function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
 
       // search order in moysklad
-      axios.get(
+      /*axios.get(
         'https://online.moysklad.ru/api/remap/1.1/entity/customerorder?filter=name='+ms_numOrder,
       {
         headers: headers,
@@ -1018,7 +1018,7 @@ new CronJob('*/1 * * * *', () => {
             }
           }).catch(function(error) {
             console.log(error);
-          });
+          });*/
     }
     async function listMajors(auth) {
       const sheets = google.sheets({version: 'v4', auth});
@@ -1189,9 +1189,9 @@ new CronJob('*/1 * * * *', () => {
             });
 
             var id = ids[x];
-            /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
+            models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
               if (err) console.log('ОШИБКА ОБНОВЛЕНИЯ!!!');
-            });*/
+            });
           }
         })
         .catch(errqw => {
