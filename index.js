@@ -958,7 +958,6 @@ new CronJob('*/1 * * * *', () => {
           headers: headers,
           auth: {username: ms_login,password: ms_pass}
         }).then(function(response) {
-          console.log(response);
           if(response.data.rows.length > 0) {
             const product = response.data.rows[0].meta.href;
             positions.push(
@@ -982,8 +981,6 @@ new CronJob('*/1 * * * *', () => {
           console.log(error);
         });
       }
-
-      console.log(positions);
 
       // search order in moysklad
               axios.get(
