@@ -940,6 +940,16 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
+    async function getProduct(article,ms_login,ms_pass,headers) {
+      const response = await axios.get(
+          'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(article),
+        {
+          headers: headers,
+          auth: {username: ms_login,password: ms_pass}
+        });
+      const data = await response.json(); 
+      return data; 
+    }
     function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
 
       const positions_count = ms_idProduct[ms_purchase].name.length;
@@ -951,17 +961,10 @@ new CronJob('*/1 * * * *', () => {
       const positions = [];
 
       for (var i = 0; i < positions_count; i++) {
-        global.col = positions_col[i];
-        global.price = positions_price[i];
         // search product
-        var product_resp = axios.get(
-          'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(positions_art[i]),
-        {
-          headers: headers,
-          auth: {username: ms_login,password: ms_pass}
-        });
+        var product_resp = getProduct(positions_art[i],ms_login,ms_pass,headers);
         console.log(product_resp);
-        if(product_resp.data.rows.length > 0) {
+        /*if(product_resp.data.rows.length > 0) {
             const product = product_resp.data.rows[0].meta.href;
             positions.push(
               {
@@ -976,7 +979,28 @@ new CronJob('*/1 * * * *', () => {
                 }
               }
             );
-          }
+          }*/
+        /*.then(function(response) {
+          if(response.data.rows.length > 0) {
+            const product = response.data.rows[0].meta.href;
+            positions.push(
+              {
+                "quantity": global.col,
+                "price": global.price*100,
+                "assortment": {
+                  "meta": {
+                    "href": product,
+                    "type": "product",
+                    "mediaType": "application/json"
+                  }
+                }
+              }
+            );
+            global.positions = positions;
+          }    
+        }).catch(function(error) {
+          console.log(error);
+        });*/
       }
 
       console.log(positions);
