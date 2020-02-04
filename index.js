@@ -940,7 +940,7 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
-    function create_ms_order() {
+    function create_ms_order(ms_numOrder, counterparty) {
       // search order in moysklad
               axios.get(
                 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder?filter=name='+ms_numOrder,
@@ -1123,7 +1123,7 @@ new CronJob('*/1 * * * *', () => {
               if(response.data.rows.length > 0) {
                 const counterparty = response.data.rows[0].meta.href;
                 console.log('Найден контрагент '+counterparty);
-                create_ms_order();
+                create_ms_order(ms_numOrder, counterparty);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
                 // if counterparty not exists
@@ -1146,7 +1146,7 @@ new CronJob('*/1 * * * *', () => {
                 }).then(function(response) {
                   const counterparty = response.data.meta.href;
                   console.log('Добавлен новый контрагент '+counterparty);
-                  create_ms_order();
+                  create_ms_order(ms_numOrder, counterparty);
                 }).catch(function(error) {
                   console.log(error);
                 });
