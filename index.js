@@ -963,7 +963,8 @@ new CronJob('*/1 * * * *', () => {
           if(response.data.rows.length > 0) {
             const product = response.data.rows[0].meta.href;
             positions.push([
-"quantity": global.col,
+              {
+                "quantity": global.col,
                 "price": global.price,
                 "discount": 0,
                 "vat": 0,
@@ -975,7 +976,7 @@ new CronJob('*/1 * * * *', () => {
                   }
                 },
                 "reserve": global.col
-              ]
+              }]
             );
           }    
         }).catch(function(error) {
