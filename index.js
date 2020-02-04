@@ -947,7 +947,7 @@ new CronJob('*/1 * * * *', () => {
           headers: headers,
           auth: {username: ms_login,password: ms_pass}
         }).then(function(response) {
-          return response;
+          global.product_resp = response;
         }).catch(function(error) {
           console.log(error);
         });  
@@ -964,8 +964,8 @@ new CronJob('*/1 * * * *', () => {
 
       for (var i = 0; i < positions_count; i++) {
         // search product
-        var product_resp = getProduct(positions_art[i],ms_login,ms_pass,headers);
-        console.log(product_resp);
+        getProduct(positions_art[i],ms_login,ms_pass,headers);
+        console.log(global.product_resp);
         /*if(product_resp.data.rows.length > 0) {
             const product = product_resp.data.rows[0].meta.href;
             positions.push(
