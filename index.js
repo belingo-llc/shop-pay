@@ -991,7 +991,7 @@ new CronJob('*/1 * * * *', () => {
             for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
               var col = parseInt(ms_idProduct[ms_purchase].col[i]);
               var price = parseInt(ms_idProduct[ms_purchase].price[i]);
-              if(col != null || price != null) {
+              if(col != null && price != null) {
                 axios.get(
                   'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
                 {
