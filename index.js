@@ -940,14 +940,17 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
-    async function getProduct(article,ms_login,ms_pass,headers) {
-      var response = await axios.get(
+    function getProduct(article,ms_login,ms_pass,headers) {
+      axios.get(
           'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(article),
         {
           headers: headers,
           auth: {username: ms_login,password: ms_pass}
-        });
-      return response;  
+        }).then(function(response) {
+          return response;
+        }).catch(function(error) {
+          console.log(error);
+        });  
     }
     function create_ms_order(ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass) {
 
