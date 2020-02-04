@@ -986,7 +986,8 @@ new CronJob('*/1 * * * *', () => {
             global.order_ms_id = response.data.id;
 
             for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
-              console.log(ms_idProduct[ms_purchase].price[i]);
+              global.i = i;
+              console.log(ms_idProduct[ms_purchase].price[global.i]);
               axios.get(
                 'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
               {
@@ -994,8 +995,8 @@ new CronJob('*/1 * * * *', () => {
                 auth: {username: ms_login,password: ms_pass}
               }).then(function(response) {
                 var data = {
-                  "quantity": parseInt(ms_idProduct[ms_purchase].col[i]),
-                  "price": parseInt(ms_idProduct[ms_purchase].price[i])*100,
+                  "quantity": parseInt(ms_idProduct[ms_purchase].col[global.i]),
+                  "price": parseInt(ms_idProduct[ms_purchase].price[global.i])*100,
                   "assortment": {
                     "meta": {
                       "href": response.data.rows[0].meta.href,
