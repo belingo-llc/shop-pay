@@ -952,41 +952,6 @@ new CronJob('*/1 * * * *', () => {
         if(response.data.rows.length > 0) {
           console.log('Заказ №'+ms_numOrder+' уже существует!');
         }else{
-          // create payment in moysklad
-          var createPaymentUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/paymentin';
-          var payment_data = {
-            "name": ms_numOrder,
-            "organization": {
-              "meta": {
-                "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
-                "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/organization/metadata",
-                "type": "organization",
-                "mediaType": "application/json"
-              }
-            },
-            "agent": {
-              "meta": {
-                "href": counterparty,
-                "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/counterparty/metadata",
-                "type": "counterparty",
-                "mediaType": "application/json"
-              }
-            },
-            "sum": parseInt(ms_sumOrder)*100,
-            "vatSum": parseInt(ms_sumOrder)*100
-          }
-          axios.post(createPaymentUrl, payment_data, {
-            headers: headers,
-            auth: {username: ms_login,password: ms_pass}
-          }).then(function(response) {
-            // change sum payment
-            /*axios.put('https://online.moysklad.ru/api/remap/1.1/entity/paymentin/'+response.data.id, 
-              {
-                "sum": parseInt(ms_sumOrder)
-              }, {
-              headers: headers,
-              auth: {username: ms_login,password: ms_pass}
-            }).then(function(response) {*/
               // create order in moysklad
               var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
               var data = {
@@ -1039,6 +1004,46 @@ new CronJob('*/1 * * * *', () => {
                 console.log(ms_idProduct[ms_purchase].col);
                 console.log(ms_idProduct[ms_purchase].price);
 
+                          // create payment in moysklad
+          var createPaymentUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/paymentin';
+          var payment_data = {
+            "name": ms_numOrder,
+            "organization": {
+              "meta": {
+                "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
+                "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/organization/metadata",
+                "type": "organization",
+                "mediaType": "application/json"
+              }
+            },
+            "agent": {
+              "meta": {
+                "href": counterparty,
+                "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/counterparty/metadata",
+                "type": "counterparty",
+                "mediaType": "application/json"
+              }
+            },
+            "sum": parseInt(ms_sumOrder)*100,
+            "vatSum": parseInt(ms_sumOrder)*100,
+            "operations": [
+                 {
+                   "meta": {
+                   "href": response.data.meta.href,
+                   "type": "customerOrder"
+                 },
+                 "linkedSum": parseInt(ms_sumOrder)*100
+               }
+             ]
+          }
+          axios.post(createPaymentUrl, payment_data, {
+            headers: headers,
+            auth: {username: ms_login,password: ms_pass}
+          }).then(function(response) {
+          }).catch(function(error) {
+            console.log(error);
+          });
+
                 //var already_query = [];
 
                 for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
@@ -1083,9 +1088,6 @@ new CronJob('*/1 * * * *', () => {
             /*}).catch(function(error) {
               console.log(error);
             });*/
-          }).catch(function(error) {
-            console.log(error);
-          });
         }
       }).catch(function(error) {
         console.log(error);
