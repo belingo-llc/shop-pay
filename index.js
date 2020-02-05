@@ -976,6 +976,7 @@ new CronJob('*/1 * * * *', () => {
                     });
                   }, 3000);
                   //}
+                  if(product_href) {
                   positions.push([{
                           "quantity": col,
                           "price": price*100,
@@ -987,6 +988,7 @@ new CronJob('*/1 * * * *', () => {
                             }
                           }
                         }]);
+                }
 
                 }
 console.log(positions);
