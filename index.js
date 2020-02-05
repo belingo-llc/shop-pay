@@ -966,6 +966,8 @@ new CronJob('*/1 * * * *', () => {
                         });
                     }
 
+                    setTimeout(function() {console.log('timeout 3s')}, 3000);
+
                 }
                 return positions;
     }
