@@ -969,20 +969,20 @@ new CronJob('*/1 * * * *', () => {
                       auth: {username: ms_login,password: ms_pass}
                     }).then(function(response) {
                       if(response.data.rows.length > 0) {
-                        var product_href = response.data.rows[0].meta.href;
+                        global.product_href = response.data.rows[0].meta.href;
                       }
                     }).catch(function(error) {
                        console.log(error);
                     });
                   }, 3000);
                   //}
-                  if(product_href) {
+                  if(global.product_href) {
                   positions.push([{
                           "quantity": col,
                           "price": price*100,
                           "assortment": {
                             "meta": {
-                              "href": product_href,
+                              "href": global.product_href,
                               "type": "product",
                               "mediaType": "application/json"
                             }
