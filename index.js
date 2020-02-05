@@ -985,40 +985,9 @@ new CronJob('*/1 * * * *', () => {
 
 
 // generate positions TEST
-            var positions = [];
-              for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
-                  var col = parseInt(ms_idProduct[ms_purchase].col[i]);
-                  var price = parseInt(ms_idProduct[ms_purchase].price[i]);
-                  //already_query.push(ms_idProduct[ms_purchase].art[i]);
-                  if(col == null) { var col = 1; }
-                  //if(col != null && price != null) {
-                    setTimeout(function() {
-                    axios.get(
-                      'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
-                    {
-                      headers: headers,
-                      auth: {username: ms_login,password: ms_pass}
-                    });
-                  }, 3000);
-                    if(response.data.rows.length > 0) {
-                        global.product_href = response.data.rows[0].meta.href;
-                      }
-                  //}
-                  //if(global.product_href) {
-                  positions.push([{
-                          "quantity": col,
-                          "price": price*100,
-                          "assortment": {
-                            "meta": {
-                              "href": global.product_href,
-                              "type": "product",
-                              "mediaType": "application/json"
-                            }
-                          }
-                        }]);
-                //}
+            // generate positions
+            var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
 
-                }
 console.log(positions);
 
 
