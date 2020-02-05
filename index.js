@@ -946,7 +946,7 @@ new CronJob('*/1 * * * *', () => {
               for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
                   var price = parseInt(ms_idProduct[ms_purchase].price[i]);
-                  var product_href = '';
+                  product_href = '';
                   if(col == null) { var col = 1; }
                     axios.get(
                       'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
@@ -954,9 +954,11 @@ new CronJob('*/1 * * * *', () => {
                       headers: headers,
                       auth: {username: ms_login,password: ms_pass}
                     }).then(function(response) {
-                      product_href = response.data.rows[0].meta.href;
+                      if(response.data.rows.length > 0) {
+                        this.product_href = response.data.rows[0].meta.href;
+                      }
                     });
-                    console.log(product_href);
+                    console.log(this.product_href);
                     /*if(product.data.rows.length > 0) {
                       positions.push({
                           "quantity": col,
