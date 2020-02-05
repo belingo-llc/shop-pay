@@ -969,7 +969,7 @@ new CronJob('*/1 * * * *', () => {
                       auth: {username: ms_login,password: ms_pass}
                     }).then(function(response) {
                       if(response.data.rows.length > 0) {
-                        positions.push({
+                        positions.push([{
                           "quantity": col,
                           "price": price*100,
                           "assortment": {
@@ -979,7 +979,7 @@ new CronJob('*/1 * * * *', () => {
                               "mediaType": "application/json"
                             }
                           }
-                        });
+                        }]);
                       }
                     }).catch(function(error) {
                        console.log(error);
