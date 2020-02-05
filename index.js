@@ -952,6 +952,40 @@ new CronJob('*/1 * * * *', () => {
         if(response.data.rows.length > 0) {
           console.log('Заказ №'+ms_numOrder+' уже существует!');
         }else{
+
+            // generate positions
+            var positions = [];
+              for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
+                  var col = parseInt(ms_idProduct[ms_purchase].col[i]);
+                  var price = parseInt(ms_idProduct[ms_purchase].price[i]);
+                  //already_query.push(ms_idProduct[ms_purchase].art[i]);
+                  if(col == null) { var col = 1; }
+                  //if(col != null && price != null) {
+                    axios.get(
+                      'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
+                    {
+                      headers: headers,
+                      auth: {username: ms_login,password: ms_pass}
+                    }).then(function(response) {
+                      if(response.data.rows.length > 0) {
+                        positions.push({
+                          "quantity": col,
+                          "price": price*100,
+                          "assortment": {
+                            "meta": {
+                              "href": response.data.rows[0].meta.href,
+                              "type": "product",
+                              "mediaType": "application/json"
+                            }
+                          }
+                        });
+                      }
+                    }).catch(function(error) {
+                       console.log(error);
+                    });
+                  //}
+                }
+console.log(positions);
               // create order in moysklad
               var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
               var data = {
@@ -984,15 +1018,7 @@ new CronJob('*/1 * * * *', () => {
                     "mediaType": "application/json"
                   }
                 },
-                "payments": [{
-                  "meta": {
-                    "href": response.data.meta.href,
-                    "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/paymentin/metadata",
-                    "type": "paymentin",
-                    "mediaType": "application/json",
-                    "uuidHref": "http://online.moysklad.ru/app/#paymentin/edit?id="+response.data.id
-                  }
-                }],
+                "positions": positions,
                 "description": ms_delivery+' '+ms_delivery_address+' '+ms_street+' '+ms_home+' '+ms_room 
               }
               axios.post(createOrderUrl, data, {
@@ -1001,8 +1027,8 @@ new CronJob('*/1 * * * *', () => {
               }).then(function(response) {
                 console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
                 var order_ms_id = response.data.id;
-                console.log(ms_idProduct[ms_purchase].col);
-                console.log(ms_idProduct[ms_purchase].price);
+                //console.log(ms_idProduct[ms_purchase].col);
+                //console.log(ms_idProduct[ms_purchase].price);
 
                           // create payment in moysklad
           var createPaymentUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/paymentin';
@@ -1046,7 +1072,7 @@ new CronJob('*/1 * * * *', () => {
 
                 //var already_query = [];
 
-                for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
+                /*for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
                   var price = parseInt(ms_idProduct[ms_purchase].price[i]);
                   //already_query.push(ms_idProduct[ms_purchase].art[i]);
@@ -1081,7 +1107,7 @@ new CronJob('*/1 * * * *', () => {
                        console.log(error);
                     });
                   //}
-                }
+                }*/
               }).catch(function(error) {
                 console.log(error);
               });
