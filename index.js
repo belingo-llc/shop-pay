@@ -956,6 +956,7 @@ new CronJob('*/1 * * * *', () => {
                     }).then(function(response) {
                       if(response.data.rows.length > 0) {
                         this.product_href = response.data.rows[0].meta.href;
+                        console.log(response.data.rows[0].meta.href);
                       }
                     });
                     console.log(this.product_href);
