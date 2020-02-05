@@ -959,6 +959,7 @@ new CronJob('*/1 * * * *', () => {
             "organization": {
               "meta": {
                 "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
+                "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/organization/metadata",
                 "type": "organization",
                 "mediaType": "application/json"
               }
@@ -966,6 +967,7 @@ new CronJob('*/1 * * * *', () => {
             "agent": {
               "meta": {
                 "href": counterparty,
+                "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/counterparty/metadata",
                 "type": "counterparty",
                 "mediaType": "application/json"
               }
