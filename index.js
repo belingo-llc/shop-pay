@@ -1019,13 +1019,13 @@ new CronJob('*/1 * * * *', () => {
                     "mediaType": "application/json"
                   }
                 },
-                "payments": [
+                "payments": {
                   "meta": {
                     "href": response.data.meta.href,
                     "type": "paymentin",
                     "mediaType": "application/json"
                   }
-                ],
+                },
                 "description": ms_delivery+' '+ms_delivery_address+' '+ms_street+' '+ms_home+' '+ms_room 
               }
               axios.post(createOrderUrl, data, {
