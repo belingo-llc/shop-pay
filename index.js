@@ -940,8 +940,7 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
-    function generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass) {
-      var positions = [];
+    function generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass, order_ms_id) {
       setTimeout(function() {
               for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
@@ -959,22 +958,25 @@ new CronJob('*/1 * * * *', () => {
                         console.log(response.data.rows[0].meta.href);
                         console.log(col);
                         console.log(price);
-                      }
-                    });
-                    //console.log(this.product_href);
-                    /*if(product.data.rows.length > 0) {
-                      positions.push({
+                        var data = {
                           "quantity": col,
                           "price": price*100,
                           "assortment": {
                             "meta": {
-                              "href": product.data.rows[0].meta.href,
+                              "href": response.data.rows[0].meta.href,
                               "type": "product",
                               "mediaType": "application/json"
                             }
                           }
+                        }
+                        axios.post('https://online.moysklad.ru/api/remap/1.1/entity/customerorder/'+order_ms_id+'/positions', data, {
+                          headers: headers,
+                          auth: {username: ms_login,password: ms_pass}
+                        }).catch(function(error) {
+                          console.log(error);
                         });
-                    }*/
+                      }
+                    });
 
                 }
                  }, 3000);
@@ -995,18 +997,18 @@ new CronJob('*/1 * * * *', () => {
 
 // generate positions TEST
             // generate positions
-            var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
+            //var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
 
-console.log(positions);
+//console.log(positions);
 
 
 
         }else{
 
             // generate positions
-            var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
+            //var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
 
-console.log(positions);
+//console.log(positions);
               // create order in moysklad
               var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
               var data = {
@@ -1039,7 +1041,7 @@ console.log(positions);
                     "mediaType": "application/json"
                   }
                 },
-                "positions": positions,
+                //"positions": positions,
                 "description": ms_delivery+' '+ms_delivery_address+' '+ms_street+' '+ms_home+' '+ms_room 
               }
               axios.post(createOrderUrl, data, {
@@ -1087,6 +1089,7 @@ console.log(positions);
             headers: headers,
             auth: {username: ms_login,password: ms_pass}
           }).then(function(response) {
+            generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass, order_ms_id);
           }).catch(function(error) {
             console.log(error);
           });
