@@ -953,9 +953,9 @@ new CronJob('*/1 * * * *', () => {
                       headers: headers,
                       auth: {username: ms_login,password: ms_pass}
                     }).then(function(response) {
-                      var product_href = response.data.rows[0].meta.href;
+                      global.product_href = response.data.rows[0].meta.href;
                     });
-                    console.log(product_href);
+                    console.log(global.product_href);
                     /*if(product.data.rows.length > 0) {
                       positions.push({
                           "quantity": col,
