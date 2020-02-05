@@ -1021,7 +1021,7 @@ console.log(positions);
                   }, 3000);
                   //}
                   //if(global.product_href) {
-                  positions.push([{
+                  positions.push({
                           "quantity": col,
                           "price": price*100,
                           "assortment": {
@@ -1031,7 +1031,7 @@ console.log(positions);
                               "mediaType": "application/json"
                             }
                           }
-                        }]);
+                        });
                 //}
 
                 }
