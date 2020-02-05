@@ -980,7 +980,7 @@ new CronJob('*/1 * * * *', () => {
             // change sum payment
             axios.put('https://online.moysklad.ru/api/remap/1.1/entity/paymentin/'+response.data.id, 
               {
-                "sum": ms_sumOrder
+                "sum": parseInt(ms_sumOrder)
               }, {
               headers: headers,
               auth: {username: ms_login,password: ms_pass}
