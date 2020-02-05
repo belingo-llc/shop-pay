@@ -940,19 +940,22 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
-    async function generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass) {
+    function generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass) {
       var positions = [];
+      setTimeout(function() {
               for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
                   var price = parseInt(ms_idProduct[ms_purchase].price[i]);
                   if(col == null) { var col = 1; }
-                    var product = await axios.get(
+                    axios.get(
                       'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
                     {
                       headers: headers,
                       auth: {username: ms_login,password: ms_pass}
+                    }).then(function(response) {
+                      console.log(response.data.rows[0].meta.href);
                     });
-                    if(product.data.rows.length > 0) {
+                    /*if(product.data.rows.length > 0) {
                       positions.push({
                           "quantity": col,
                           "price": price*100,
@@ -964,14 +967,13 @@ new CronJob('*/1 * * * *', () => {
                             }
                           }
                         });
-                    }
-
-                    setTimeout(function() {console.log('timeout 3s')}, 3000);
+                    }*/
 
                 }
+                 }, 3000);
                 return positions;
     }
-    async function create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
+    function create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
 
       // search order in moysklad
       axios.get(
@@ -986,7 +988,7 @@ new CronJob('*/1 * * * *', () => {
 
 // generate positions TEST
             // generate positions
-            var positions = await generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
+            var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
 
 console.log(positions);
 
