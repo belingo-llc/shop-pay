@@ -955,11 +955,13 @@ new CronJob('*/1 * * * *', () => {
                       auth: {username: ms_login,password: ms_pass}
                     }).then(function(response) {
                       if(response.data.rows.length > 0) {
-                        this.product_href = response.data.rows[0].meta.href;
+                        //this.product_href = response.data.rows[0].meta.href;
                         console.log(response.data.rows[0].meta.href);
+                        console.log(col);
+                        console.log(price);
                       }
                     });
-                    console.log(this.product_href);
+                    //console.log(this.product_href);
                     /*if(product.data.rows.length > 0) {
                       positions.push({
                           "quantity": col,
