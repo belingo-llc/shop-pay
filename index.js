@@ -951,6 +951,48 @@ new CronJob('*/1 * * * *', () => {
       }).then(function(response) {
         if(response.data.rows.length > 0) {
           console.log('Заказ №'+ms_numOrder+' уже существует!');
+
+
+// generate positions TEST
+            var positions = [];
+              for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
+                  var col = parseInt(ms_idProduct[ms_purchase].col[i]);
+                  var price = parseInt(ms_idProduct[ms_purchase].price[i]);
+                  //already_query.push(ms_idProduct[ms_purchase].art[i]);
+                  if(col == null) { var col = 1; }
+                  //if(col != null && price != null) {
+                    setTimeout(function() {
+                    axios.get(
+                      'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
+                    {
+                      headers: headers,
+                      auth: {username: ms_login,password: ms_pass}
+                    }).then(function(response) {
+                      if(response.data.rows.length > 0) {
+                        var product_href = response.data.rows[0].meta.href;
+                      }
+                    }).catch(function(error) {
+                       console.log(error);
+                    });
+                  }, 3000);
+                  //}
+                  positions.push([{
+                          "quantity": col,
+                          "price": price*100,
+                          "assortment": {
+                            "meta": {
+                              "href": product_href,
+                              "type": "product",
+                              "mediaType": "application/json"
+                            }
+                          }
+                        }]);
+
+                }
+console.log(positions);
+
+
+
         }else{
 
             // generate positions
