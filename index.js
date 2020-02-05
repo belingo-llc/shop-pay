@@ -1022,8 +1022,10 @@ new CronJob('*/1 * * * *', () => {
                 "payments": [{
                   "meta": {
                     "href": response.data.meta.href,
+                    "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/paymentin/metadata",
                     "type": "paymentin",
-                    "mediaType": "application/json"
+                    "mediaType": "application/json",
+                    "uuidHref": "http://online.moysklad.ru/app/#paymentin/edit?id="+response.data.id
                   }
                 }],
                 "description": ms_delivery+' '+ms_delivery_address+' '+ms_street+' '+ms_home+' '+ms_room 
