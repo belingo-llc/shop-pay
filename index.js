@@ -940,7 +940,7 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
-    function create_ms_order(ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
+    function create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
 
       // search order in moysklad
       axios.get(
@@ -952,9 +952,9 @@ new CronJob('*/1 * * * *', () => {
         if(response.data.rows.length > 0) {
           console.log('Заказ №'+ms_numOrder+' уже существует!');
         }else{
-          // create order in moysklad
-          var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
-          var data = {
+          // create payment in moysklad
+          var createPaymentUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/paymentin';
+          var payment_data = {
             "name": ms_numOrder,
             "organization": {
               "meta": {
@@ -970,62 +970,105 @@ new CronJob('*/1 * * * *', () => {
                 "mediaType": "application/json"
               }
             },
-            "state": {
-              "meta": {
-                "href": "https://online.moysklad.ru/api/remap/1.1/entity/customerorder/metadata/states/dd8bc4ce-caef-11e8-9109-f8fc0033f16b",
-                "type": "state",
-                "mediaType": "application/json"
-              }
-            },
-            "description": ms_delivery+' '+ms_delivery_address+' '+ms_street+' '+ms_home+' '+ms_room 
+            "sum": ms_sumOrder
           }
-          axios.post(createOrderUrl, data, {
+          axios.post(createPaymentUrl, payment_data, {
             headers: headers,
             auth: {username: ms_login,password: ms_pass}
           }).then(function(response) {
-            console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
-            var order_ms_id = response.data.id;
-            console.log(ms_idProduct[ms_purchase].col);
-            console.log(ms_idProduct[ms_purchase].price);
-
-            //var already_query = [];
-
-            for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
-              var col = parseInt(ms_idProduct[ms_purchase].col[i]);
-              var price = parseInt(ms_idProduct[ms_purchase].price[i]);
-              //already_query.push(ms_idProduct[ms_purchase].art[i]);
-              if(col == null) { var col = 1; }
-              //if(col != null && price != null) {
-                axios.get(
-                  'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
+            // create order in moysklad
+            var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
+            var data = {
+              "name": ms_numOrder,
+              "organization": {
+                "meta": {
+                  "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
+                  "type": "organization",
+                  "mediaType": "application/json"
+                }
+              },
+              "agent": {
+                "meta": {
+                  "href": counterparty,
+                  "type": "counterparty",
+                  "mediaType": "application/json"
+                }
+              },
+              "store": {
+                "meta": {
+                  "href": "https://online.moysklad.ru/api/remap/1.1/entity/store/4c43405e-32d9-11ea-0a80-02870063fffd",
+                  "type": "store",
+                  "mediaType": "application/json"
+                }
+              },
+              "state": {
+                "meta": {
+                  "href": "https://online.moysklad.ru/api/remap/1.1/entity/customerorder/metadata/states/dd8bc62a-caef-11e8-9109-f8fc0033f16c",
+                  "type": "state",
+                  "mediaType": "application/json"
+                }
+              },
+              "payments": [
                 {
-                  headers: headers,
-                  auth: {username: ms_login,password: ms_pass}
-                }).then(function(response) {
-                  if(response.data.rows.length > 0) {
-                    var data = {
-                      "quantity": col,
-                      "price": price*100,
-                      "assortment": {
-                        "meta": {
-                          "href": response.data.rows[0].meta.href,
-                           "type": "product",
-                            "mediaType": "application/json"
+                  "meta": {
+                    "href": response.data.meta.href,
+                    "type": "paymentin",
+                    "mediaType": "application/json"
+                  }
+                }
+              ],
+              "description": ms_delivery+' '+ms_delivery_address+' '+ms_street+' '+ms_home+' '+ms_room 
+            }
+            axios.post(createOrderUrl, data, {
+              headers: headers,
+              auth: {username: ms_login,password: ms_pass}
+            }).then(function(response) {
+              console.log('Новый заказ №'+ms_numOrder+' успешно создан!');
+              var order_ms_id = response.data.id;
+              console.log(ms_idProduct[ms_purchase].col);
+              console.log(ms_idProduct[ms_purchase].price);
+
+              //var already_query = [];
+
+              for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
+                var col = parseInt(ms_idProduct[ms_purchase].col[i]);
+                var price = parseInt(ms_idProduct[ms_purchase].price[i]);
+                //already_query.push(ms_idProduct[ms_purchase].art[i]);
+                if(col == null) { var col = 1; }
+                //if(col != null && price != null) {
+                  axios.get(
+                    'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
+                  {
+                    headers: headers,
+                    auth: {username: ms_login,password: ms_pass}
+                  }).then(function(response) {
+                    if(response.data.rows.length > 0) {
+                      var data = {
+                        "quantity": col,
+                        "price": price*100,
+                        "assortment": {
+                          "meta": {
+                            "href": response.data.rows[0].meta.href,
+                             "type": "product",
+                              "mediaType": "application/json"
+                          }
                         }
                       }
+                      axios.post('https://online.moysklad.ru/api/remap/1.1/entity/customerorder/'+order_ms_id+'/positions', data, {
+                        headers: headers,
+                        auth: {username: ms_login,password: ms_pass}
+                      }).catch(function(error) {
+                        console.log(error);
+                      });
                     }
-                    axios.post('https://online.moysklad.ru/api/remap/1.1/entity/customerorder/'+order_ms_id+'/positions', data, {
-                      headers: headers,
-                      auth: {username: ms_login,password: ms_pass}
-                    }).catch(function(error) {
-                      console.log(error);
-                    });
-                  }
-                }).catch(function(error) {
-                   console.log(error);
-                });
-              //}
-            }
+                  }).catch(function(error) {
+                     console.log(error);
+                  });
+                //}
+              }
+            }).catch(function(error) {
+              console.log(error);
+            });
           }).catch(function(error) {
             console.log(error);
           });
@@ -1163,6 +1206,7 @@ new CronJob('*/1 * * * *', () => {
             const ms_street = shop[x].street;
             const ms_home = shop[x].home;
             const ms_room = shop[x].room;
+            const ms_sumOrder = shop[x].sumOrder;
 
             //search counterparty
             axios.get(
@@ -1174,7 +1218,7 @@ new CronJob('*/1 * * * *', () => {
               if(response.data.rows.length > 0) {
                 const counterparty = response.data.rows[0].meta.href;
                 console.log('Найден контрагент '+counterparty);
-                create_ms_order(ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
+                create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
                 // if counterparty not exists
@@ -1197,7 +1241,7 @@ new CronJob('*/1 * * * *', () => {
                 }).then(function(response) {
                   const counterparty = response.data.meta.href;
                   console.log('Добавлен новый контрагент '+counterparty);
-                  create_ms_order(ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
+                  create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
                 }).catch(function(error) {
                   console.log(error);
                 });
@@ -1208,9 +1252,9 @@ new CronJob('*/1 * * * *', () => {
             });
 
             var id = ids[x];
-            models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
+            /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
               if (err) console.log('ОШИБКА ОБНОВЛЕНИЯ!!!');
-            });
+            });*/
           }
         })
         .catch(errqw => {
