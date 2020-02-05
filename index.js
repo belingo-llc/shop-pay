@@ -961,6 +961,7 @@ new CronJob('*/1 * * * *', () => {
                   //already_query.push(ms_idProduct[ms_purchase].art[i]);
                   if(col == null) { var col = 1; }
                   //if(col != null && price != null) {
+                    setTimeout(function() {
                     axios.get(
                       'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
                     {
@@ -983,6 +984,7 @@ new CronJob('*/1 * * * *', () => {
                     }).catch(function(error) {
                        console.log(error);
                     });
+                  }, 3000);
                   //}
                 }
 console.log(positions);
