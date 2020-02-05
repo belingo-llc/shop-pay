@@ -969,23 +969,25 @@ new CronJob('*/1 * * * *', () => {
                       auth: {username: ms_login,password: ms_pass}
                     }).then(function(response) {
                       if(response.data.rows.length > 0) {
-                        positions.push([{
-                          "quantity": col,
-                          "price": price*100,
-                          "assortment": {
-                            "meta": {
-                              "href": response.data.rows[0].meta.href,
-                              "type": "product",
-                              "mediaType": "application/json"
-                            }
-                          }
-                        }]);
+                        var product_href = response.data.rows[0].meta.href;
                       }
                     }).catch(function(error) {
                        console.log(error);
                     });
                   }, 3000);
                   //}
+                  positions.push([{
+                          "quantity": col,
+                          "price": price*100,
+                          "assortment": {
+                            "meta": {
+                              "href": product_href,
+                              "type": "product",
+                              "mediaType": "application/json"
+                            }
+                          }
+                        }]);
+
                 }
 console.log(positions);
               // create order in moysklad
