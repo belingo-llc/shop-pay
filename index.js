@@ -1058,8 +1058,8 @@ new CronJob('*/1 * * * *', () => {
                           "assortment": {
                             "meta": {
                               "href": response.data.rows[0].meta.href,
-                               "type": "product",
-                                "mediaType": "application/json"
+                              "type": "product",
+                              "mediaType": "application/json"
                             }
                           }
                         }
