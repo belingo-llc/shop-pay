@@ -971,9 +971,9 @@ new CronJob('*/1 * * * *', () => {
                 "type": "counterparty",
                 "mediaType": "application/json"
               }
-            },
-            "sum": ms_sumOrder,
-            "vatSum": ms_sumOrder
+            }
+            //"sum": ms_sumOrder,
+            //"vatSum": ms_sumOrder
           }
           axios.post(createPaymentUrl, payment_data, {
             headers: headers,
