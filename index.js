@@ -971,20 +971,22 @@ new CronJob('*/1 * * * *', () => {
                 "type": "counterparty",
                 "mediaType": "application/json"
               }
-            }
+            },
+            "sum": parseInt(ms_sumOrder)*100,
+            "vatSum": parseInt(ms_sumOrder)*100
           }
           axios.post(createPaymentUrl, payment_data, {
             headers: headers,
             auth: {username: ms_login,password: ms_pass}
           }).then(function(response) {
             // change sum payment
-            axios.put('https://online.moysklad.ru/api/remap/1.1/entity/paymentin/'+response.data.id, 
+            /*axios.put('https://online.moysklad.ru/api/remap/1.1/entity/paymentin/'+response.data.id, 
               {
                 "sum": parseInt(ms_sumOrder)
               }, {
               headers: headers,
               auth: {username: ms_login,password: ms_pass}
-            }).then(function(response) {
+            }).then(function(response) {*/
               // create order in moysklad
               var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
               var data = {
@@ -1078,9 +1080,9 @@ new CronJob('*/1 * * * *', () => {
               }).catch(function(error) {
                 console.log(error);
               });
-            }).catch(function(error) {
+            /*}).catch(function(error) {
               console.log(error);
-            });
+            });*/
           }).catch(function(error) {
             console.log(error);
           });
