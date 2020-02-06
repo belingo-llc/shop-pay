@@ -1035,7 +1035,7 @@ setTimeout(async function() {
                         //console.log(price);
                         positions.push({
                           "quantity": col,
-                          "price": price*100,
+                          "price": (price*100)/col,
                           "assortment": {
                             "meta": {
                               "href": response.data.rows[0].meta.href,
