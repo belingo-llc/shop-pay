@@ -965,7 +965,7 @@ new CronJob('*/1 * * * *', () => {
                           "assortment": {
                             "meta": {
                               "href": response.data.rows[0].meta.href,
-                              "metadataHref"  => "https://online.moysklad.ru/api/remap/1.1/entity/product/metadata",
+                              "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/product/metadata",
                               "type": "product",
                               "mediaType": "application/json"
                             }
