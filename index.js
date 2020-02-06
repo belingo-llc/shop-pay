@@ -953,7 +953,7 @@ new CronJob('*/1 * * * *', () => {
                     {
                       headers: headers,
                       auth: {username: ms_login,password: ms_pass}
-                    }).then(async function(response) {
+                    }).then(function(response) {
                       if(response.data.rows.length > 0) {
                         //this.product_href = response.data.rows[0].meta.href;
                         console.log(response.data.rows[0].meta.href);
@@ -971,7 +971,7 @@ new CronJob('*/1 * * * *', () => {
                             }
                           }
                         }
-                        await axios.post('https://online.moysklad.ru/api/remap/1.1/entity/customerorder/'+order_ms_id+'/positions', data, {
+                        axios.post('https://online.moysklad.ru/api/remap/1.1/entity/customerorder/'+order_ms_id+'/positions', data, {
                           headers: headers,
                           auth: {username: ms_login,password: ms_pass}
                         }).catch(function(error) {
