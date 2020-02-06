@@ -940,7 +940,7 @@ new CronJob('*/1 * * * *', () => {
         });
       });
     }
-    function generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass, order_ms_id) {
+    function generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass) {
       
 
               for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
@@ -948,12 +948,14 @@ new CronJob('*/1 * * * *', () => {
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
                   var price = parseInt(ms_idProduct[ms_purchase].price[i]);
                   if(col == null) { var col = 1; }
-                    await axios.get(
+                    var response = await axios.get(
                       'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
                     {
                       headers: headers,
                       auth: {username: ms_login,password: ms_pass}
-                    }).then(function(response) {
+                    })
+                    console.log(response.data.rows[0].meta.href);
+                    /*.then(function(response) {
                       if(response.data.rows.length > 0) {
                         //this.product_href = response.data.rows[0].meta.href;
                         console.log(response.data.rows[0].meta.href);
@@ -971,18 +973,12 @@ new CronJob('*/1 * * * *', () => {
                             }
                           }
                         }
-                        axios.post('https://online.moysklad.ru/api/remap/1.1/entity/customerorder/'+order_ms_id+'/positions', data, {
-                          headers: headers,
-                          auth: {username: ms_login,password: ms_pass}
-                        }).catch(function(error) {
-                          console.log(error);
-                        });
                       
                       }
                     }).catch(function(error) {
                       console.log(error);
-                    });
-                    }, 2000);
+                    });*/
+                    }, 1000);
 
                 }
                  
@@ -1006,6 +1002,7 @@ new CronJob('*/1 * * * *', () => {
             //var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
 
 //console.log(positions);
+generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
 
 
 
@@ -1095,7 +1092,7 @@ new CronJob('*/1 * * * *', () => {
             headers: headers,
             auth: {username: ms_login,password: ms_pass}
           }).then(function(response) {
-            generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass, order_ms_id);
+            //generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass, order_ms_id);
           }).catch(function(error) {
             console.log(error);
           });
