@@ -997,27 +997,64 @@ setTimeout(async function() {
       {
         headers: headers,
         auth: {username: ms_login,password: ms_pass}
-      }).then(async function(response) {
+      }).then(function(response) {
+
         if(response.data.rows.length > 0) {
           console.log('Заказ №'+ms_numOrder+' уже существует!');
 
 
-// generate positions TEST
-            // generate positions
-            //var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
 
-//console.log(positions);
-var positions = await generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
-console.log(positions);
+                //console.log(positions);
+
 
 
 
         }else{
 
             // generate positions
-            //var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
+            setTimeout(async function() {
+  var positions = [];
+              for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
+                
+                  var col = parseInt(ms_idProduct[ms_purchase].col[i]);
+                  var price = parseInt(ms_idProduct[ms_purchase].price[i]);
+                  if(col == null) { var col = 1; }
+                    var response = await axios.get(
+                      'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
+                    {
+                      headers: headers,
+                      auth: {username: ms_login,password: ms_pass}
+                    });
+                    //if()
+                    //console.log(response.data);
+                    /*.then(function(response) {*/
+                      if(response.data.rows.length > 0) {
+                        //this.product_href = response.data.rows[0].meta.href;
+                        //console.log(response.data.rows[0].meta.href);
+                        //console.log(col);
+                        //console.log(price);
+                        positions.push({
+                          "quantity": col,
+                          "price": price*100,
+                          "assortment": {
+                            "meta": {
+                              "href": response.data.rows[0].meta.href,
+                              "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/product/metadata",
+                              "type": "product",
+                              "mediaType": "application/json"
+                            }
+                          }
+                        });
+                      
+                      }
+                    /*}).catch(function(error) {
+                      console.log(error);
+                    });*/
+                    
 
-//console.log(positions);
+                }
+
+
               // create order in moysklad
               var createOrderUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/customerorder';
               var data = {
@@ -1050,7 +1087,7 @@ console.log(positions);
                     "mediaType": "application/json"
                   }
                 },
-                //"positions": positions,
+                "positions": positions,
                 "description": ms_delivery+' '+ms_delivery_address+' '+ms_street+' '+ms_home+' '+ms_room 
               }
               axios.post(createOrderUrl, data, {
@@ -1144,6 +1181,7 @@ console.log(positions);
               }).catch(function(error) {
                 console.log(error);
               });
+ }, 3000);
             /*}).catch(function(error) {
               console.log(error);
             });*/
