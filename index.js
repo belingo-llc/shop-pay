@@ -976,8 +976,10 @@ new CronJob('*/1 * * * *', () => {
                         }).catch(function(error) {
                           console.log(error);
                         });
-                      }, 1000);
+                      }, 2000);
                       }
+                    }).catch(function(error) {
+                      console.log(error);
                     });
 
                 }
