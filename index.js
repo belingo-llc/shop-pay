@@ -989,7 +989,7 @@ setTimeout(async function() {
                  
                 //return positions;
     }
-    async function create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
+    function create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
 
       // search order in moysklad
       axios.get(
@@ -997,7 +997,7 @@ setTimeout(async function() {
       {
         headers: headers,
         auth: {username: ms_login,password: ms_pass}
-      }).then(function(response) {
+      }).then(async function(response) {
         if(response.data.rows.length > 0) {
           console.log('Заказ №'+ms_numOrder+' уже существует!');
 
