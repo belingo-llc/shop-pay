@@ -1365,9 +1365,9 @@ setTimeout(async function() {
             });
 
             var id = ids[x];
-            /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
+            models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
               if (err) console.log('ОШИБКА ОБНОВЛЕНИЯ!!!');
-            });*/
+            });
           }
         })
         .catch(errqw => {
