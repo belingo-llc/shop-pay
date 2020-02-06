@@ -983,7 +983,8 @@ setTimeout(async function() {
                     
 
                 }
-                console.log(positions);
+                return positions;
+                //console.log(positions);
               }, 3000);
                  
                 //return positions;
@@ -1006,7 +1007,8 @@ setTimeout(async function() {
             //var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
 
 //console.log(positions);
-generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
+var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
+console.log(positions);
 
 
 
