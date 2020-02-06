@@ -953,7 +953,7 @@ new CronJob('*/1 * * * *', () => {
                     {
                       headers: headers,
                       auth: {username: ms_login,password: ms_pass}
-                    })
+                    });
                     console.log(response.data);
                     /*.then(function(response) {
                       if(response.data.rows.length > 0) {
