@@ -943,6 +943,7 @@ new CronJob('*/1 * * * *', () => {
     function generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass) {
       
 setTimeout(async function() {
+  var positions = [];
               for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
                 
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
@@ -954,14 +955,15 @@ setTimeout(async function() {
                       headers: headers,
                       auth: {username: ms_login,password: ms_pass}
                     });
-                    console.log(response.data);
-                    /*.then(function(response) {
+                    //if()
+                    //console.log(response.data);
+                    /*.then(function(response) {*/
                       if(response.data.rows.length > 0) {
                         //this.product_href = response.data.rows[0].meta.href;
-                        console.log(response.data.rows[0].meta.href);
-                        console.log(col);
-                        console.log(price);
-                        var data = {
+                        //console.log(response.data.rows[0].meta.href);
+                        //console.log(col);
+                        //console.log(price);
+                        positions.push({
                           "quantity": col,
                           "price": price*100,
                           "assortment": {
@@ -972,15 +974,16 @@ setTimeout(async function() {
                               "mediaType": "application/json"
                             }
                           }
-                        }
+                        });
                       
                       }
-                    }).catch(function(error) {
+                    /*}).catch(function(error) {
                       console.log(error);
                     });*/
                     
 
                 }
+                console.log(positions);
               }, 3000);
                  
                 //return positions;
