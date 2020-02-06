@@ -989,7 +989,7 @@ setTimeout(async function() {
                  
                 //return positions;
     }
-    function create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
+    async function create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address) {
 
       // search order in moysklad
       axios.get(
@@ -1007,7 +1007,7 @@ setTimeout(async function() {
             //var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
 
 //console.log(positions);
-var positions = generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
+var positions = await generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass);
 console.log(positions);
 
 
