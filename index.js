@@ -942,7 +942,6 @@ new CronJob('*/1 * * * *', () => {
     }
     function generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass, order_ms_id) {
       
-      setTimeout(function() {
               for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
                 
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
@@ -955,6 +954,7 @@ new CronJob('*/1 * * * *', () => {
                       auth: {username: ms_login,password: ms_pass}
                     }).then(function(response) {
                       if(response.data.rows.length > 0) {
+                        setTimeout(function() {
                         //this.product_href = response.data.rows[0].meta.href;
                         console.log(response.data.rows[0].meta.href);
                         console.log(col);
@@ -976,11 +976,11 @@ new CronJob('*/1 * * * *', () => {
                         }).catch(function(error) {
                           console.log(error);
                         });
+                      }, 1000);
                       }
                     });
 
                 }
-              }, 3000);
                  
                 //return positions;
     }
