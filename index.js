@@ -942,11 +942,11 @@ new CronJob('*/1 * * * *', () => {
     }
     function generatePositions(ms_idProduct, ms_purchase, headers, ms_login, ms_pass, order_ms_id) {
       
+      setTimeout(function() {
               for (var i = 0; i < ms_idProduct[ms_purchase].name.length; i++) {
-                setTimeout(function() {
+                
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
                   var price = parseInt(ms_idProduct[ms_purchase].price[i]);
-                  product_href = '';
                   if(col == null) { var col = 1; }
                     axios.get(
                       'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
@@ -978,8 +978,9 @@ new CronJob('*/1 * * * *', () => {
                         });
                       }
                     });
-}, 1000);
+
                 }
+              }, 3000);
                  
                 //return positions;
     }
