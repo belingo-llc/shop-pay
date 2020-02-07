@@ -54,6 +54,12 @@ app.get('/', (req, res) => {
 
 });
 
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min; //Максимум не включается, минимум включается
+}
+
 const S3_BUCKET = config.S3_BUCKET;
 
 app.get('/deliveryinfo', (req, res) => res.sendFile(__dirname + '/delivery_info.html'));
@@ -262,7 +268,7 @@ app.post('/saveshopandsberpay', async (req, res) => {
   const delivery = req.body.delivery;
   const deliveryAddress = req.body.deliveryAddress;
   const comment = req.body.comment;
-  const numOrder = parseInt(+new Date()/1000);
+  const numOrder = parseInt(getRandomInt(10, 99)+''+parseInt(+new Date()/1000));
   const sumOrder = req.body.sumOrder;
   const sumDelivery = req.body.sumDelivery;
   const summ = req.body.summ;
@@ -455,7 +461,7 @@ app.post('/saveproductsandsberpay', async (req, res) => {
   const delivery = req.body.delivery;
   const deliveryAddress = req.body.deliveryAddress;
   const comment = req.body.comment;
-  const numOrder = parseInt(+new Date()/1000);
+  const numOrder = parseInt(getRandomInt(10, 99)+''+parseInt(+new Date()/1000));
   const sumOrder = req.body.sumOrder;
   var sumDelivery = req.body.sumDelivery;
   const summ = req.body.summ;
@@ -1308,18 +1314,18 @@ setTimeout(async function() {
             }
             const ms_login = 'Admin@9645054848';
             const ms_pass = 'marmar3587133mar';
-            const ms_telephone = shop[x].telephone;
-            const ms_fio = shop[x].fio;
-            const ms_nik = shop[x].nik;
-            const ms_numOrder = shop[x].numOrder;
-            const ms_idProduct = shop[x].idProduct;
-            const ms_purchase = shop[x].purchase;
-            const ms_delivery = shop[x].delivery;
-            const ms_delivery_address = shop[x].deliveryAddress;
-            const ms_street = shop[x].street;
-            const ms_home = shop[x].home;
-            const ms_room = shop[x].room;
-            const ms_sumOrder = shop[x].sumOrder;
+            var ms_telephone = shop[x].telephone;
+            var ms_fio = shop[x].fio;
+            var ms_nik = shop[x].nik;
+            var ms_numOrder = shop[x].numOrder;
+            var ms_idProduct = shop[x].idProduct;
+            var ms_purchase = shop[x].purchase;
+            var ms_delivery = shop[x].delivery;
+            var ms_delivery_address = shop[x].deliveryAddress;
+            var ms_street = shop[x].street;
+            var ms_home = shop[x].home;
+            var ms_room = shop[x].room;
+            var ms_sumOrder = shop[x].sumOrder;
 
             //search counterparty
             axios.get(
@@ -1329,7 +1335,7 @@ setTimeout(async function() {
               auth: {username: ms_login,password: ms_pass}
             }).then(function(response) {
               if(response.data.rows.length > 0) {
-                const counterparty = response.data.rows[0].meta.href;
+                var counterparty = response.data.rows[0].meta.href;
                 console.log('Найден контрагент '+counterparty);
                 create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
               }else{
@@ -1352,7 +1358,7 @@ setTimeout(async function() {
                   headers: headers,
                   auth: {username: ms_login,password: ms_pass}
                 }).then(function(response) {
-                  const counterparty = response.data.meta.href;
+                  var counterparty = response.data.meta.href;
                   console.log('Добавлен новый контрагент '+counterparty);
                   create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
                 }).catch(function(error) {
