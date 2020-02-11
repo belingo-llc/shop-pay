@@ -1295,18 +1295,6 @@ new CronJob('*/1 * * * *', () => {
             }
             const ms_login = 'Admin@9645054848';
             const ms_pass = 'marmar3587133mar';
-            var ms_telephone = shop[x].telephone;
-            var ms_fio = shop[x].fio;
-            var ms_nik = shop[x].nik;
-            var ms_numOrder = shop[x].numOrder;
-            var ms_idProduct = shop[x].idProduct;
-            var ms_purchase = shop[x].purchase;
-            var ms_delivery = shop[x].delivery;
-            var ms_delivery_address = shop[x].deliveryAddress;
-            var ms_street = shop[x].street;
-            var ms_home = shop[x].home;
-            var ms_room = shop[x].room;
-            var ms_sumOrder = shop[x].sumOrder;
 
             //search counterparty
             axios.get(
@@ -1317,6 +1305,18 @@ new CronJob('*/1 * * * *', () => {
             }).then(function(response) {
               if(response.data.rows.length > 0) {
                 var counterparty = response.data.rows[0].meta.href;
+                var ms_telephone = shop[x].telephone;
+                var ms_fio = shop[x].fio;
+                var ms_nik = shop[x].nik;
+                var ms_numOrder = shop[x].numOrder;
+                var ms_idProduct = shop[x].idProduct;
+                var ms_purchase = shop[x].purchase;
+                var ms_delivery = shop[x].delivery;
+                var ms_delivery_address = shop[x].deliveryAddress;
+                var ms_street = shop[x].street;
+                var ms_home = shop[x].home;
+                var ms_room = shop[x].room;
+                var ms_sumOrder = shop[x].sumOrder;
                 console.log('Найден контрагент '+counterparty);
                 create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
               }else{
@@ -1340,6 +1340,18 @@ new CronJob('*/1 * * * *', () => {
                   auth: {username: ms_login,password: ms_pass}
                 }).then(function(response) {
                   var counterparty = response.data.meta.href;
+                  var ms_telephone = shop[x].telephone;
+                  var ms_fio = shop[x].fio;
+                  var ms_nik = shop[x].nik;
+                  var ms_numOrder = shop[x].numOrder;
+                  var ms_idProduct = shop[x].idProduct;
+                  var ms_purchase = shop[x].purchase;
+                  var ms_delivery = shop[x].delivery;
+                  var ms_delivery_address = shop[x].deliveryAddress;
+                  var ms_street = shop[x].street;
+                  var ms_home = shop[x].home;
+                  var ms_room = shop[x].room;
+                  var ms_sumOrder = shop[x].sumOrder;
                   console.log('Добавлен новый контрагент '+counterparty);
                   create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
                 }).catch(function(error) {
