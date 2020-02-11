@@ -967,7 +967,7 @@ new CronJob('*/1 * * * *', () => {
 
                 //console.log(positions);
 
-
+                console.log(ms_idProduct[ms_purchase]);
 
 
         }else{
