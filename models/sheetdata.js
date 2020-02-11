@@ -18,6 +18,9 @@ const schema = new Schema(
     numberProduct: {
         type: String
     },
+    variantProduct: {
+        type: String
+    },
     amount: {
         type: String
     },
