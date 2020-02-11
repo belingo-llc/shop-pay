@@ -983,14 +983,14 @@ new CronJob('*/1 * * * *', () => {
                   var variant = ms_idProduct[ms_purchase].variant[i];
                   //console.log(ms_idProduct[ms_purchase]);
                   //console.log(variant);
-                  if(variant != null) {
+                  if(variant != null && variant != '') {
                     var response = await axios.get(
                       'https://online.moysklad.ru/api/remap/1.1/entity/variant/'+variant,
                     {
                       headers: headers,
                       auth: {username: ms_login,password: ms_pass}
                     });
-                    if(response.data.rows.length > 0) {
+                    if(response.data.meta.href) {
                       positions.push({
                         "quantity": col,
                         "price": (price*100)/col,
