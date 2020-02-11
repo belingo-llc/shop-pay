@@ -980,10 +980,10 @@ new CronJob('*/1 * * * *', () => {
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
                   var price = parseInt(ms_idProduct[ms_purchase].price[i]);
                   if(col == null) { var col = 1; }
-                  //var variant = ms_idProduct[ms_purchase].variant[i];
+                  var variant = ms_idProduct[ms_purchase].variant[i];
                   //console.log(ms_idProduct[ms_purchase]);
                   //console.log(variant);
-                  /*if(variant != '') {
+                  if(variant != null) {
                     positions.push({
                       "quantity": col,
                       "price": (price*100)/col,
@@ -996,7 +996,7 @@ new CronJob('*/1 * * * *', () => {
                         }
                       }
                     });
-                  }else{*/
+                  }else{
                     var response = await axios.get(
                       'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
                     {
@@ -1025,7 +1025,7 @@ new CronJob('*/1 * * * *', () => {
                         });
                       
                       }
-                  //}
+                  }
                     /*}).catch(function(error) {
                       console.log(error);
                     });*/
