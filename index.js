@@ -1321,6 +1321,18 @@ new CronJob('*/1 * * * *', () => {
                 create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
+                var ms_telephone = shop[x].telephone;
+                var ms_fio = shop[x].fio;
+                var ms_nik = shop[x].nik;
+                var ms_numOrder = shop[x].numOrder;
+                var ms_idProduct = shop[x].idProduct;
+                var ms_purchase = shop[x].purchase;
+                var ms_delivery = shop[x].delivery;
+                var ms_delivery_address = shop[x].deliveryAddress;
+                var ms_street = shop[x].street;
+                var ms_home = shop[x].home;
+                var ms_room = shop[x].room;
+                var ms_sumOrder = shop[x].sumOrder;
                 // if counterparty not exists
                 var createCounterPartyUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/counterparty';
                 var data = {
@@ -1340,18 +1352,6 @@ new CronJob('*/1 * * * *', () => {
                   auth: {username: ms_login,password: ms_pass}
                 }).then(function(response) {
                   var counterparty = response.data.meta.href;
-                  var ms_telephone = shop[x].telephone;
-                  var ms_fio = shop[x].fio;
-                  var ms_nik = shop[x].nik;
-                  var ms_numOrder = shop[x].numOrder;
-                  var ms_idProduct = shop[x].idProduct;
-                  var ms_purchase = shop[x].purchase;
-                  var ms_delivery = shop[x].delivery;
-                  var ms_delivery_address = shop[x].deliveryAddress;
-                  var ms_street = shop[x].street;
-                  var ms_home = shop[x].home;
-                  var ms_room = shop[x].room;
-                  var ms_sumOrder = shop[x].sumOrder;
                   console.log('Добавлен новый контрагент '+counterparty);
                   create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
                 }).catch(function(error) {
