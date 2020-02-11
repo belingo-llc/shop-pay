@@ -1314,11 +1314,11 @@ new CronJob('*/1 * * * *', () => {
             {
               headers: headers,
               auth: {username: ms_login,password: ms_pass}
-            }).then(function(response) {
+            }).then(async function(response) {
               if(response.data.rows.length > 0) {
                 var counterparty = response.data.rows[0].meta.href;
                 console.log('Найден контрагент '+counterparty);
-                create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
+                await create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
               }else{
                 console.log('Контрагент не найден. Будет создан новый!');
                 // if counterparty not exists
@@ -1338,10 +1338,10 @@ new CronJob('*/1 * * * *', () => {
                 axios.post(createCounterPartyUrl, data, {
                   headers: headers,
                   auth: {username: ms_login,password: ms_pass}
-                }).then(function(response) {
+                }).then(async function(response) {
                   var counterparty = response.data.meta.href;
                   console.log('Добавлен новый контрагент '+counterparty);
-                  create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
+                  await create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
                 }).catch(function(error) {
                   console.log(error);
                 });
