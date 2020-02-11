@@ -967,7 +967,7 @@ new CronJob('*/1 * * * *', () => {
 
                 //console.log(positions);
 
-                console.log(ms_idProduct[ms_purchase]);
+                //console.log(ms_idProduct[ms_purchase]);
 
 
         }else{
@@ -980,8 +980,8 @@ new CronJob('*/1 * * * *', () => {
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
                   var price = parseInt(ms_idProduct[ms_purchase].price[i]);
                   if(col == null) { var col = 1; }
-                  var variant = ms_idProduct[ms_purchase].variant[i];
-                  console.log(ms_idProduct[ms_purchase]);
+                  //var variant = ms_idProduct[ms_purchase].variant[i];
+                  //console.log(ms_idProduct[ms_purchase]);
                   //console.log(variant);
                   /*if(variant != '') {
                     positions.push({
@@ -1344,9 +1344,9 @@ new CronJob('*/1 * * * *', () => {
             });
 
             var id = ids[x];
-            /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
+            models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
               if (err) console.log('ОШИБКА ОБНОВЛЕНИЯ!!!');
-            });*/
+            });
           }
         })
         .catch(errqw => {
