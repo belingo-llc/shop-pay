@@ -1285,7 +1285,7 @@ new CronJob('*/1 * * * *', () => {
           valueInputOption: 'RAW',
           resource
         })
-        .then(qw => {
+        .then(async qw => {
           for (var x = 0; x < ids.length; x++){
             console.log('Ид - ' + ids[x]);
 
@@ -1309,7 +1309,7 @@ new CronJob('*/1 * * * *', () => {
             var ms_sumOrder = shop[x].sumOrder;
 
             //search counterparty
-            axios.get(
+            await axios.get(
               'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+ms_telephone,
             {
               headers: headers,
@@ -1335,7 +1335,7 @@ new CronJob('*/1 * * * *', () => {
                     }
                   ]
                 }
-                axios.post(createCounterPartyUrl, data, {
+                await axios.post(createCounterPartyUrl, data, {
                   headers: headers,
                   auth: {username: ms_login,password: ms_pass}
                 }).then(async function(response) {
