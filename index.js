@@ -236,7 +236,8 @@ app.post('/readdata', (req, res) => {
         art: [],
         col: [],
         price: [],
-        delivery: []
+        delivery: [],
+        variant: []
       }
     }
 
@@ -246,6 +247,7 @@ app.post('/readdata', (req, res) => {
       obj[s.purchase].col.push(s.numberProduct);
       obj[s.purchase].price.push(s.amount);
       obj[s.purchase].delivery.push(s.sumDelivery);
+      obj[s.purchase].variant.push(s.variantProduct);
     })
 
     res.json({ok: true, data: obj});
@@ -863,6 +865,7 @@ new CronJob('*/1 * * * *', () => {
                   venCode: dataSheet.data.values[i][1],
                   nameProduct: dataSheet.data.values[i][2],
                   numberProduct: dataSheet.data.values[i][3],
+                  variantProduct: dataSheet.data.values[i][4],
                   amount: dataSheet.data.values[i][5],
                   status: dataSheet.data.values[i][6],
                   sumDelivery: dataSheet.data.values[i][7]
@@ -1025,6 +1028,21 @@ setTimeout(async function() {
                   var col = parseInt(ms_idProduct[ms_purchase].col[i]);
                   var price = parseInt(ms_idProduct[ms_purchase].price[i]);
                   if(col == null) { var col = 1; }
+                  var variant = ms_idProduct[ms_purchase].variant[i];
+                  if(variant != '') {
+                    positions.push({
+                      "quantity": col,
+                      "price": (price*100)/col,
+                      "assortment": {
+                        "meta": {
+                          "href": "https://online.moysklad.ru/api/remap/1.1/entity/variant/"+variant,
+                          "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/variant/metadata",
+                          "type": "variant",
+                          "mediaType": "application/json"
+                        }
+                      }
+                    });
+                  }else{
                     var response = await axios.get(
                       'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
                     {
@@ -1053,6 +1071,7 @@ setTimeout(async function() {
                         });
                       
                       }
+                  }
                     /*}).catch(function(error) {
                       console.log(error);
                     });*/
