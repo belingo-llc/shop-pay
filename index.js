@@ -1029,7 +1029,8 @@ setTimeout(async function() {
                   var price = parseInt(ms_idProduct[ms_purchase].price[i]);
                   if(col == null) { var col = 1; }
                   var variant = ms_idProduct[ms_purchase].variant[i];
-                  if(variant != '') {
+                  console.log(variant);
+                  /*if(variant != '') {
                     positions.push({
                       "quantity": col,
                       "price": (price*100)/col,
@@ -1042,7 +1043,7 @@ setTimeout(async function() {
                         }
                       }
                     });
-                  }else{
+                  }else{*/
                     var response = await axios.get(
                       'https://online.moysklad.ru/api/remap/1.1/entity/product?search='+encodeURIComponent(ms_idProduct[ms_purchase].art[i]),
                     {
@@ -1071,7 +1072,7 @@ setTimeout(async function() {
                         });
                       
                       }
-                  }
+                  //}
                     /*}).catch(function(error) {
                       console.log(error);
                     });*/
@@ -1390,9 +1391,9 @@ setTimeout(async function() {
             });
 
             var id = ids[x];
-            models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
+            /*models.Shop.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
               if (err) console.log('ОШИБКА ОБНОВЛЕНИЯ!!!');
-            });
+            });*/
           }
         })
         .catch(errqw => {
