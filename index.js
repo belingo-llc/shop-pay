@@ -1048,7 +1048,7 @@ new CronJob('*/1 * * * *', () => {
                 "name": ms_numOrder,
                 "organization": {
                   "meta": {
-                    "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
+                    "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/5ef13089-5c69-11ea-0a80-03c20005831c",
                     "type": "organization",
                     "mediaType": "application/json"
                   }
@@ -1092,7 +1092,7 @@ new CronJob('*/1 * * * *', () => {
             "name": ms_numOrder,
             "organization": {
               "meta": {
-                "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/dd6d4915-caef-11e8-9109-f8fc0033f14f",
+                "href": "https://online.moysklad.ru/api/remap/1.1/entity/organization/5ef13089-5c69-11ea-0a80-03c20005831c",
                 "metadataHref": "https://online.moysklad.ru/api/remap/1.1/entity/organization/metadata",
                 "type": "organization",
                 "mediaType": "application/json"
