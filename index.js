@@ -196,10 +196,10 @@ var insertProduct = () => {
 app.post('/boxberryquery', async (req, res) => {
   const index = req.body.index;
 
-  const code = await axios.post('http://api.boxberry.de/json.php?token=82247.rjpqadca&method=PointsByPostCode&zip='+ index);
+  const code = await axios.post('http://api.boxberry.ru/json.php?token=f960a30b4739c9c5abcf640cecc427ff&method=PointsByPostCode&zip='+ index);
   if (code.data.Code){
     try{
-      const info = await axios.post(`http://api.boxberry.de/json.php?token=82247.rjpqadca&method=PointsDescription&code=${code.data.Code}&photo=0`);
+      const info = await axios.post(`http://api.boxberry.ru/json.php?token=f960a30b4739c9c5abcf640cecc427ff&method=PointsDescription&code=${code.data.Code}&photo=0`);
       res.json({ok: true, data: info.data});
     } catch (e) {
       res.json({ok: false, text: 'По введенному Индексу точек доставки Box Berry не найдено!'});
