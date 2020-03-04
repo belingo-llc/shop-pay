@@ -550,7 +550,7 @@ $(document).ready(() => {
             $('.show_form_city').show();
             var sity = '';
             //var api_token = 'T6KqdLlDga5Y6k5thMb7aA==';
-            var api_token = 'f960a30b4739c9c5abcf640cecc427ff';
+            var api_token = '1$DQfLQIlkMsD3yNRnBsqRjt3Z9H3I2hcB';
             var custom_city = sity;
             var target_start = '';
             var ordersum = '';
