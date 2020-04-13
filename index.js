@@ -575,7 +575,7 @@ const upload = multer({
 }).single('file');
 // SAVE IMAGE
 app.post('/saveimage', (req, res) => {
-
+console.log('123');
   console.log(req.headers['content-type']);
 
   res.json({ok: true, data: req.headers});
