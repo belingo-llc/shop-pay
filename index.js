@@ -1231,7 +1231,7 @@ new CronJob('*/1 * * * *', () => {
             valueInputOption: 'RAW',
             resource
           })
-          .then(qw => {
+          .then(async qw => {
             for (var x = 0; x < ids_b.length; x++){
               console.log('Ид - ' + ids_b[x]);
               var id = ids_b[x];
