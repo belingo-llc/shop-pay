@@ -151,6 +151,11 @@ var insertProduct = () => {
         } catch(e){
           var sizeArr = [];
         }
+        try{
+          var imageArr = prod[i][9].split(',');
+        } catch(e){
+          var imageArr = [];
+        }
         
         if (arrDBName.indexOf(prod[i][0]) == -1) {
           arrData.push({
@@ -163,8 +168,8 @@ var insertProduct = () => {
             code: prod[i][6],
             season: prod[i][7] || "",
             comment: prod[i][8],
-            photo: [],
-            status: "Нет фото"
+            photo: imageArr,
+            status: "Активно"
           });
         } else {
           try {
