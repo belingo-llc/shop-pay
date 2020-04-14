@@ -1322,9 +1322,9 @@ new CronJob('*/1 * * * *', () => {
             });
 
 
-              models.Basket.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
+              /*models.Basket.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
                 if (err) console.log('ОШИБКА ОБНОВЛЕНИЯ!!! - Магазин');
-              });
+              });*/
             }
           })
           .catch(errqw => {
