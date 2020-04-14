@@ -1387,12 +1387,12 @@ $(document).ready(() => {
                 }
 
                 if (data.pr.photo.length < 6 && data.pr.photo.length > 1){
-                    $('.all_foto').append(`<div class="all_item">
+                    /*$('.all_foto').append(`<div class="all_item">
                         <label for="upload_foto_node" class="modal_button" id="upload_foto">
                             <input type="file" id="upload_foto_node" id="file" name="file" accept="image/jpeg,image/png,image/gif">
                             +
                         </label>
-                    </div>`);
+                    </div>`);*/
                 }
 
                 $('#nameProduct').val(data.pr.name);
@@ -1475,12 +1475,12 @@ $(document).ready(() => {
                     if (len > 0 && len <= 5){
                         $('.pr_info_foto').html('<img src="'+pathImage+'" alt="">')
                         $(`.all_item:eq(${len-1})`).html('<img src="'+pathImage+'" alt="">');
-                        $('.all_foto').append(`<div class="all_item">
+                        /*$('.all_foto').append(`<div class="all_item">
                             <label for="upload_foto_node" class="modal_button" id="upload_foto">
                                 <input type="file" id="upload_foto_node" id="file" name="file" accept="image/jpeg,image/png,image/gif">
                                 +
                             </label>
-                        </div>`);
+                        </div>`);*/
                     } else {
                         $('.pr_info_foto').html('<img src="'+pathImage+'" alt="">')
                         $(`.all_item:eq(${len-1})`).html('<img src="'+pathImage+'" alt="">');
