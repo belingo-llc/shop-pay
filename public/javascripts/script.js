@@ -1277,13 +1277,13 @@ $(document).ready(() => {
         e.target.id = 'size_all_active';
     });
     $(document).delegate( ".all_item", "click", (e) => {
-        if (e.target.parentElement.className.indexOf('all_item') != -1){
+        /*if (e.target.parentElement.className.indexOf('all_item') != -1){
             $('.all_item').removeClass('all_item_active')
             $(e.target.parentElement).addClass('all_item_active');
             var image = $(e.target).attr('src');
             $('.pr_info_foto img').attr('src', image);
             console.log("Нажатие на all_item");
-        }
+        }*/
     });
     $('.title_item').on('click', (e) => {
         $('.title_item').removeAttr('id');
@@ -1366,12 +1366,12 @@ $(document).ready(() => {
                         if (i == data.pr.photo.length-1){
                             $('.pr_info_foto').html('<img src="' + data.pr.photo[i] + '" alt="">')
                             $('.all_item').html('<img src="' + data.pr.photo[i] + '" alt="">');
-                            $('.all_foto').append(`<div class="all_item">
+                            /*$('.all_foto').append(`<div class="all_item">
                                 <label for="upload_foto_node" class="modal_button" id="upload_foto">
                                     <input type="file" id="upload_foto_node" id="file" name="file" accept="image/jpeg,image/png,image/gif">
                                     +
                                 </label>
-                            </div>`);
+                            </div>`);*/
                         } else {
                             $('.pr_info_foto').html('<img src="' + data.pr.photo[i] + '" alt="">')
                             $('.all_item').html('<img src="' + data.pr.photo[i] + '" alt="">');
