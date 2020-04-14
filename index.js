@@ -1235,6 +1235,93 @@ new CronJob('*/1 * * * *', () => {
             for (var x = 0; x < ids_b.length; x++){
               console.log('Ид - ' + ids_b[x]);
               var id = ids_b[x];
+
+              var pkey = Object.keys(basket[x].idProduct);
+              var newIdProduct = [];
+              var newIdProductName = [];
+              var newIdProductCol = [];
+              var newIdProductPrice = [];
+              var newIdProductVariant = [];
+              var newIdProductArt = [];
+              for (var m = 0; m < pkey.length; m++){
+                newIdProductName.push(basket[x].idProduct[pkey[m]].name);
+                newIdProductCol.push(basket[x].idProduct[pkey[m]].col);
+                newIdProductPrice.push(basket[x].idProduct[pkey[m]].price);
+                newIdProductVariant.push('');
+                newIdProductArt.push(basket[x].idProduct[pkey[m]].code);
+              }
+
+              newIdProduct.push({
+                name: newIdProductName,
+                col: newIdProductCol,
+                price: newIdProductPrice,
+                variant: newIdProductVariant,
+                art: newIdProductArt
+              });
+
+            // moysklad auth
+            const headers = {
+              'Content-Type': 'application/json',
+            }
+            const ms_login = 'Admin@9645054848';
+            const ms_pass = 'marmar3587133mar';
+            var ms_telephone = basket[x].telephone;
+            var ms_fio = basket[x].fio;
+            var ms_nik = basket[x].nik;
+            var ms_numOrder = basket[x].numOrder;
+            var ms_idProduct = newIdProduct;
+            var ms_purchase = 0;
+            var ms_delivery = basket[x].typeDelivery;
+            var ms_delivery_address = basket[x].adress.adress;
+            var ms_street = basket[x].adress.street;
+            var ms_home = basket[x].adress.home;
+            var ms_room = basket[x].adress.room;
+            var ms_sumOrder = basket[x].sumProducts;
+
+            //search counterparty
+            await axios.get(
+              'https://online.moysklad.ru/api/remap/1.1/entity/counterparty?search='+ms_telephone,
+            {
+              headers: headers,
+              auth: {username: ms_login,password: ms_pass}
+            }).then(async function(response) {
+              if(response.data.rows.length > 0) {
+                var counterparty = response.data.rows[0].meta.href;
+                console.log('Найден контрагент '+counterparty);
+                await create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
+              }else{
+                console.log('Контрагент не найден. Будет создан новый!');
+                // if counterparty not exists
+                var createCounterPartyUrl = 'https://online.moysklad.ru/api/remap/1.1/entity/counterparty';
+                var data = {
+                  "name": ms_fio,
+                  "phone": ms_telephone,
+                  "attributes": [
+                    {
+                      "id": "9d6ea88b-02aa-11e9-9ff4-3150002312fb",
+                      "name": "Ник в Instagram",
+                      "type": "string",
+                      "value": ms_nik
+                    }
+                  ]
+                }
+                await axios.post(createCounterPartyUrl, data, {
+                  headers: headers,
+                  auth: {username: ms_login,password: ms_pass}
+                }).then(async function(response) {
+                  var counterparty = response.data.meta.href;
+                  console.log('Добавлен новый контрагент '+counterparty);
+                  await create_ms_order(ms_sumOrder, ms_street, ms_home, ms_room, ms_purchase, ms_idProduct, ms_numOrder, counterparty, headers, ms_login, ms_pass, ms_delivery, ms_delivery_address);
+                }).catch(function(error) {
+                  console.log(error);
+                });
+              }
+              
+            }).catch(function(error) {
+              console.log(error);
+            });
+
+
               models.Basket.findByIdAndUpdate(id, {status: 'Оплачено - записано'}, (err) => {
                 if (err) console.log('ОШИБКА ОБНОВЛЕНИЯ!!! - Магазин');
               });
