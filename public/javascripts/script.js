@@ -571,7 +571,7 @@ $(document).ready(() => {
             if (type_page == 'Pay-Instagramm'){
                 delivery.textContent = JSON.parse(JSON.parse(sessionStorage.getItem('DELIVERY_SUM_MAIN'))) + " руб.";
             } else {
-                delivery.textContent = "250 руб.";
+                delivery.textContent = "0 руб.";
             }
 
             $('.left:eq(0) h5').remove();
@@ -580,7 +580,7 @@ $(document).ready(() => {
             if (type_page == 'Pay-Instagramm'){
                 h_three.textContent = Number(sessionStorage.getItem("SUMMA")) + Number(JSON.parse(sessionStorage.getItem('DELIVERY_SUM_MAIN'))) + " руб.";
             } else {
-                h_three.textContent = Number(sessionStorage.getItem("SUMMA")) + Number(250) + " руб.";
+                h_three.textContent = Number(sessionStorage.getItem("SUMMA")) + Number(0) + " руб.";
             }
 
         }
@@ -601,7 +601,7 @@ $(document).ready(() => {
 
             sessionStorage.setItem('DELIRVERY', "Почта России");
 
-            h_three.textContent = Number(sessionStorage.getItem("SUMMA")) + 250 + " руб.";
+            h_three.textContent = Number(sessionStorage.getItem("SUMMA")) + 0 + " руб.";
 
             try{
                 block_left.removeChild(block_left.getElementsByTagName('h5')[0]);
@@ -609,12 +609,12 @@ $(document).ready(() => {
             }
             catch (e) {
                 var delivery = document.getElementsByClassName('right')[0].getElementsByTagName('h4')[1];
-                delivery.textContent = "250 руб.";
+                delivery.textContent = "0 руб.";
                 return;
             }
 
             var delivery = document.getElementsByClassName('right')[0].getElementsByTagName('h4')[1];
-            delivery.textContent = "250 руб.";
+            delivery.textContent = "0 руб.";
 
         }
         else if (e.target.textContent == "Курьер-Москва"){
@@ -637,7 +637,7 @@ $(document).ready(() => {
             if (type_page == 'Pay-Instagramm'){
                 h_three.textContent = Number(sessionStorage.getItem("SUMMA")) + Number(JSON.parse(sessionStorage.getItem('DELIVERY_SUM_MAIN'))) + " руб.";
             } else{
-                h_three.textContent = Number(sessionStorage.getItem("SUMMA")) + Number(250) + " руб.";
+                h_three.textContent = Number(sessionStorage.getItem("SUMMA")) + Number(0) + " руб.";
             }
 
             try{
@@ -650,7 +650,7 @@ $(document).ready(() => {
                 if (type_page == 'Pay-Instagramm'){
                     delivery.textContent = JSON.parse(sessionStorage.getItem('DELIVERY_SUM_MAIN')) + " руб.";
                 } else{
-                    delivery.textContent = "250 руб.";
+                    delivery.textContent = "0 руб.";
                 }
 
                 return;
@@ -660,7 +660,7 @@ $(document).ready(() => {
             if (type_page == 'Pay-Instagramm'){
                 delivery.textContent = JSON.parse(sessionStorage.getItem('DELIVERY_SUM_MAIN')) + " руб.";
             } else{
-                delivery.textContent = "250 руб.";
+                delivery.textContent = "0 руб.";
             }
 
         }
