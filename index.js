@@ -132,7 +132,7 @@ var insertProduct = () => {
       const sheets = google.sheets({version: 'v4', auth});
       var param = {
         spreadsheetId: '1Wx9YsMXflihNX-E_BeoCV0QOQtSo1qz7pM_LqtAoSYY',
-        range: 'Data' + '!A3:J'
+        range: 'Data' + '!A2:J'
       }
 
       var data = await sheets.spreadsheets.values.get(param);
