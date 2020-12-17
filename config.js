@@ -12,7 +12,7 @@ module.exports = {
     LOGIN_SBER: "marusik-11001-api",
     PASSWORD_SBER: "xZtA79hBB",
     TOKEN_SBER: "vqo693o0vkivb1719k2r81cq3",
-    MONGO_URL: 'mongodb://fedos:asser220@ds024778.mlab.com:24778/shopping',  
+    MONGO_URL: 'mongodb://fedos:Asser220_@ds024778.mlab.com:24778/shopping',  
     IS_PRODUCTION: process.env.NODE_ENV === 'production',
     DESTINATION: 'uploads',
     AWS_ACCESS_KEY_ID: process.env.AWS_ACCESS_KEY_ID,
